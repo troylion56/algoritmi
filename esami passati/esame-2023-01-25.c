@@ -206,6 +206,17 @@ void dfs(nodo* g,int c) {
 	}
 }
 
+void visita (nodo_albero* a) {
+	if (a==NULL)
+		return ;
+	else{
+		visita(a->left);
+        printf("%d",a->left);
+		visita(a->right);
+        printf("%d",a->right);
+	}
+}
+
 nodo_albero* abr (grafo* g) {
 	if(g==NULL)
         return 0;
@@ -235,7 +246,7 @@ nodo_albero* abr (grafo* g) {
     for (int i=2;i<colore;i++) {
         inserimento(root,vett[i],NULL);
     }
-
+   // visita;
 }
 
 

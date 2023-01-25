@@ -1,0 +1,170 @@
+/*funzione che verifica se l'ultimo elemento della lista è uguale al primo */
+int ultimo_uguale_primo(puntaLista l){
+	if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	int primo=l->info;
+	puntaLista scorri=l;
+	while(scorri->next!=NULL){
+		//printf(" %d ",scorri->info); 
+		scorri=scorri->next;
+	}
+	int ultimo=scorri->info;
+	//printf("primo valore %d",primo);
+	//printf(" ultimo valore%d",ultimo);
+	 return primo==ultimo;
+}
+
+/*funzione che verifica se l'ultimo elemento della lista è maggiore del primo */
+int ultimo_maggiore_primo(puntaLista l){
+	if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	int primo = l->info;
+	puntaLista scorri = l;
+	while(scorri->next!=NULL){
+		scorri=scorri->next;
+		//printf("\n%d\n",scorri->info);
+	}
+	int ultimo= scorri->info;
+	//printf("\nprimo valore della lista %d",primo);
+	//printf("\nl'ultimo valore della lista %d",ultimo);
+	if(ultimo>primo)
+		return 1;
+	return 0;
+}
+
+/*funzione che verifica che la lista sia in ordine decrescente*/
+int lista_ordinata_decrescentemente(puntaLista l){
+	if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	puntaLista precc= l; //inizializzo il precedente
+	puntaLista succ= precc->next; //inizializzo il succ
+	while(succ!=NULL){
+		if(precc->info<succ->info)		//per il crescente if(precc->info> succ->info
+			return 0 ;
+		succ=succ->next;
+		precc=precc->next;
+	}
+	return 1;
+}
+
+
+/*funzione che verifica che tutti gli elementi della lista hanno campo info pari alla lunghezza della lista*/
+ int lunghezza_uguale_campoInfo(puntaLista l){
+	 if(l==NULL) 
+		 return 0;
+	 puntaLista scorri= l;
+	 int lenght=0;
+	 while(scorri!=NULL){ //prima conto tuttu gli elementi della lista
+		 lenght++;
+		 scorri=scorri->next;
+	 }
+	 //printf("\nlunghezza lista %d",lenght);		//lo uso per il debugger
+	 scorri=l;
+	 while(scorri!=NULL){ //poi verifico che ogni elemento della lista è uguale alla lunghezza della lista
+		 if(scorri->info!=lenght){
+			 return 0;
+		 }
+		 scorri= scorri->next;
+	 }
+	 return 1;
+ }
+
+/*funzione che verifica se almeno un elemento della lista ha campo info pari alla lunghezza della lista*/
+ int verifica_almeno_un_campoInfo_pari_lunghezza(puntaLista l){
+	 if(l==NULL) 
+		 return 0;
+	 puntaLista scorri= l;
+	 int lenght=0;
+	 while(scorri!=NULL){
+		 lenght++;
+		 scorri=scorri->next;
+	 }
+	 scorri=l;
+	 while(scorri!=NULL){
+		 if(scorri->info==lenght) {
+			 return 1;			//me ne basta uno 
+		 }
+		 scorri=scorri->next;	//se non trovo vado avanti
+	 }
+	 return 0;
+ }
+
+/*funzione che conta i nodi della lista che hanno campo info minore del nodo successivo*/
+int conta_nodi_minori_successivo(puntaLista l){
+	if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	int cont=0;
+	puntaLista precc=l;
+	puntaLista succ = precc->next;
+	while(succ!=NULL){
+		if(precc->info<succ->info)
+			cont++;
+		succ=succ->next;
+		precc=precc->next;
+	}
+	return cont;
+}
+
+/* lista che verifica se almeno una coppia di valori consecutivi di una lista sono uguali */
+  int verifica_coppia_consecutiv_uguali(puntaLista l){
+	  if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	  puntaLista scorri=l;
+	  while(scorri->next!=NULL){
+		  if(scorri->info==scorri->next->info){
+			  return 1;
+		  }
+		  scorri=scorri->next;
+	  }
+	  return 0;
+}
+
+//funzione che verifica se vi sono doppioni nella lista
+int verifica_doppioni(puntaLista l){
+	if(l==NULL) 
+		return 0; //se la lista è vuota ritorna 0
+	if(l->next==NULL)
+		return 0; //la lista ha un solo elmento 
+	int trovato =0;
+	puntaLista precc=l;
+	while(precc->next!=NULL){
+		puntaLista succ= l->next;
+		while(succ!=NULL){
+			if(precc->info==succ->info) 
+				trovato =1;
+			succ=succ->next;
+		}
+		precc=precc->next;
+	}
+	return trovato;
+}
+
+//funzione che ritorna il numeri dei valori che sono uguali tra due liste
+int conta_elementi_comuni (puntaLista l1, puntaLista l2){
+	if (l1 == NULL || l2 == NULL)
+		return 0;
+	int conta = 0;
+	puntaLista scorr1 = l1;
+	while (scorr1 != NULL){
+		puntaLista scorri2 = l2;
+		while (scorri2 != NULL){
+			if (scorr1->info == scorri2->info){
+				conta++;
+				break;				// NB vengono considerati 1 le copie uguali
+			}
+			scorri2 = scorri2->next;
+		}
+		scorr1 = scorr1->next;
+	}
+	return conta;
+}

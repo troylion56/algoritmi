@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*esame 09-09-2022*/			//corretto
+/*esame 19-09-2022 quello che ha fatto bishoy*/			//corretto
 /*int verifica(oodo_albero* a, grafo* g)
 che accetti in imput un puntatore a alla radice di un albero binario di interi e un puntatore g ad un 
 grafo non orientato rappresentato tramite oggetti e riferimenti. La funzione restituisce 1 (cioè true) 
-se esiste auna foglia dell'albero la cui profondita è uguale al numero di nodi alla componete   
-connessa del grafo g che ha piu nodi altrimenti la funzione restituisce 0 (cioè false). Se uno 
+se esiste un nodo con due figli nell'albero la cui profondità è uguale al numero di nodi della componente 
+connessa del grafo g che ha meno nodi altrimenti la funzione restituisce 0 (cioè false). Se uno 
 (o entrambi) tra grafo e albero è vuoto (cioè uguale a NULL) la funzione ritorna 0 (false).*/
+
 
 
 typedef struct elem_lista_nodi elem_nodi;
@@ -121,7 +122,7 @@ nodo_albero* costrusci_albero () {
 	nodo_albero* c=inserimentofiglioleft(a,3,'C');					//filgio left di a (c)
 	nodo_albero* d=inserimentofilgioright(a,4,'D');					//filgio right di a (d)
 	
-	nodo_albero* e=inserimentofilgioright(b,5,'E');					//filgio left di b (e)
+	nodo_albero* e=inserimentofiglioleft(b,5,'E');					//filgio left di b (e)
 	
 	nodo_albero* f=inserimentofiglioleft(d,6,'F');					//figlio left di b (f)
 	nodo_albero* g=inserimentofilgioright(d,7,'G');					//figlio right di b (g)
@@ -138,10 +139,10 @@ nodo_albero* costrusci_albero () {
 /*           n
  *          / \ 
  *         a   b
- *        /\    \ 
- *       c d     e
- *         /\    /\
- *         f g  h  i
+ *        /\    / 
+ *       c d    e
+ *         /\   /\
+ *         f g h  i
  *           /
  *           l            */
 //-------------------------------------------------------
@@ -241,38 +242,107 @@ grafo* costruisci_grafo() {
  	nodo* n7 = aggiungi_nodo(g);
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
+	nodo* n10 = aggiungi_nodo(g);
+	nodo* n11 = aggiungi_nodo(g);
 
  	/* questa componente ha 2 nodi e 1 arco */
  	newarco(g,n1,n2);
 
- 	/* questa componente ha 3 nodi e 3 archi */
+ 	/* questa componente ha 3 nodi e 1 archi */
  	newarco(g,n3,n4);
  	newarco(g,n4,n5);
-	newarco(g,n5,n3);
 	
-	/* questa componente ha 4 nodi e 3 archi */
- 	newarco(g,n6,n7);
- 	newarco(g,n7,n8);
-	newarco(g,n8,n9);
- 	
+	/* questa componente ha 3 nodi e 3 archi */
+	newarco(g,n6,n7);
+	newarco(g,n7,n8);
+	newarco(g,n8,n6);
+	
+	/* questa componente ha 3 nodi e 2 archi */
+ 	newarco(g,n9,n10);
+ 	newarco(g,n10,n11);
+	
+	
  	return g;
 }
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
-
-void dfs (nodo* g, int c) {
-    g->color=c;
-    elem_archi* la=g->archi;
-    while(la!=NULL) {
-        nodo* altro_nodo=la->info->from;
-        if(altro_nodo==g)
-            altro_nodo =la->info->to;
-        if(altro_nodo==0)
-            dfs(altro_nodo,c)
-        la=la->next;
-    }
+int is_foglia (nodo_albero* a) {
+	if(a==NULL)
+		return 0;
+	if( (a->left==NULL) && (a->right==NULL))
+		return 1;
+	return 0;
 }
+
+
+//faccio il confrono e la verica in questa funzione chiamo una funzione d'appoggio che mi verifica se sono una foglia
+int verifica_figli_visita (nodo_albero* a,int alt, int dim_gra) {	//dim_gra è la dimensione del sottografo piu grande
+	if(a==NULL)
+		return 0;
+	int l= verifica_figli_visita(a->left,alt+1,dim_gra);
+	int r= verifica_figli_visita(a->right,alt+1,dim_gra);
+	if(alt==dim_gra && ((is_foglia(a->left)) && (is_foglia(a->right)) ))
+		return 1;
+	return l || r;
+}
+
+
+
+void dfs(nodo* g,int c) {
+	g->color=c;
+	elem_archi* la=g->archi;
+	while(la!=NULL) {
+		nodo* altro_nodo=la->info->from;
+		if(altro_nodo==g)
+			altro_nodo=la->info->to;
+		if(altro_nodo->color==0)
+			dfs(altro_nodo,c);
+	la=la->next;
+	}
+}
+
+int verifica (grafo* g, nodo_albero* a, int h) {
+	if(g==NULL && a==NULL)
+		return 0;
+	if(g==NULL || a==NULL)
+		return 0;
+	elem_nodi* scorri1=g->nodi;
+	int colore=0;
+	while(scorri1!=NULL) {
+		if(scorri1->info->color==0) {
+			colore++;
+			printf("\ncolor: %d",colore);
+			dfs(scorri1->info,colore);
+		}
+		scorri1=scorri1->next;
+	}
+	printf("\n");
+	
+	int* vett=(int*)calloc(colore,sizeof(int));
+	
+	//----------riempi vettore---------------
+	elem_nodi* temp2=g->nodi;
+	while(temp2!=NULL){
+		vett [temp2->info->color]++;
+		temp2=temp2->next;
+	}
+	//-------------------------
+	
+	int min=vett[1];
+	for(int i=1;i<=colore;i++) {
+		printf("vett [%d]=%d\n",i,vett[i]);
+		if(vett[i]<min)
+			min=vett[i];
+	}
+	printf("la componente minore ha %d nodi\n",min);
+	
+	if(verifica_figli_visita(a,h,min))
+		return 1;
+	return 0;
+}
+
+
 
 
 

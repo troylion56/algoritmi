@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 2023-01-25 esame mio che probabilemnte devo rifare mannaggia al cazzo */	
-/*appna ho il testo scrivo qui*/	
+/*funzione che ti tornava un albero binario di ricerca dove ogni nodo era il numero dei nodi di ogni componente del grafo*/	
 
 
 

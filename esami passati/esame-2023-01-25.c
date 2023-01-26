@@ -179,7 +179,14 @@ nodo_albero* nuovoNodo(int info) {
 
 void stampaalbero (nodo_albero* root) {
 	if(root !=NULL) {
-		printf("\nnodo in questione: %d, suo figlio sinistro: %d, suo figlio destro: %d",root->info, root->left,root->right);
+		printf("\nnodo: %d \t",root->info);
+		if (root->left!=NULL){
+			printf("sx: %d \t",root->left->info);
+		}
+		if (root->right!=NULL){
+			printf("dx: %d",root->right->info);
+		}
+		
 		stampaalbero(root->left);
 		stampaalbero(root->right);
 	}
@@ -190,21 +197,19 @@ void aggiungi_nodo_albero(nodo_albero* root, int info) {
     if (info < root->info) {
         if (root->left != NULL) {
             aggiungi_nodo_albero(root->left, info);
-			printf("\nho aggiunti un figlio sinistro %d con info %d",root->left,info);
         } 
 		else {
             root->left = nuovoNodo(info);
-			printf("\nho cretato un nuovo nodo con info %d",info);
+			printf("\ncreo e aggiungo a sinistra: %d",info);
         }
     } 
 	else if (info > root->info) {
         if (root->right != NULL) {
             aggiungi_nodo_albero(root->right, info);
-			printf("\nho aggiunti un figlio sinistro %d con info %d",root->right,info);
         } 
 		else {
             root->right = nuovoNodo(info);
-			printf("\nho cretato un nuovo nodo con info %d",info);
+			printf("\ncreo e aggiungo a destra: %d\n",info);
         }
     }
 }
@@ -253,7 +258,7 @@ nodo_albero* abr (grafo* g) {
     nodo_albero* root=nuovoNodo(vett[1]);
 	for (int i=1;i<=colore;i++) {
 		aggiungi_nodo_albero(root,vett[i]);
-		printf(" %d",vett[i]);
+		printf("inserisco nell'lbero: %d\n",vett[i]);
 	}
 	stampaalbero(root);
 	return root;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 //---------------------------strutture-------------------------------
 typedef struct nodo {
@@ -56,6 +57,48 @@ void stampainversa (puntanodo testa){
 	printf("\n---------------------------------\n");
 }
 //-------------------------------------------------------------------
+
+
+
+//----------------------------inserimento-----------------------------
+void aggiungi_in_testa(NODO* pld, int x) {
+
+	NODO* li = (NODO*)malloc(sizeof(NODO));
+	li->prev = NULL;   // lo aggiungo in testa
+	li->next = (*pld);
+	li->info = x;
+	if( (*pld) != NULL )  {   // c'era gia' un elemento
+		 (*pld)->prev = li;   // il suo prev deve puntare al nuovo elemento
+    }
+    (*pld) = li;
+}
+//-------------------------------------------------------------------
+
+
+
+//----------------------------rimozione-----------------------------
+void rimuovi(NODO* pld, int x) {
+
+    NODO* li = (*pld);
+    while( li != NULL ) {
+    	if( li->info == x) {          // l'ho trovato e lo devo rimuovere
+             if( li->prev == NULL) {  // sto rimuovendo il primo elemento
+                  (*pld) = li->next;  // mi salto
+             } else {                 // c'e' un elemento che mi precede
+                  li->prev->next = li->next;
+             }
+             if( li->next != NULL) {  // c'e' almeno un elemento che segue
+                  li->next->prev = li->prev;
+             }
+             free(li);
+             break;     // cancello solo la prima occorrenza e poi esco dal while
+    	} 
+        li = li->next;
+    }
+}
+//-------------------------------------------------------------------
+
+
 
 //-------------------------main--------------------------------------
 int main(int argc, char **argv)

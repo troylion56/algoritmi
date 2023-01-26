@@ -249,6 +249,7 @@ nodo_albero* abr (grafo* g) {
     nodo_albero* root=nuovoNodo(vett[1]);
 	for (int i=1;i<=colore;i++) {
 		aggiungi_nodo_albero(root,vett[i]);
+		printf(" %d",vett[i]);
 	}
 	stampaalbero(root);
 	return root;

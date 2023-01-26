@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 //------------------------------------------STRUTTRE ALBERO-----------------------------------------------
 /*nodo di un albero*/
 typedef struct nodo_abero_struc {
 	int info;
+	struct nodo_abero_struc* parent;
 	struct nodo_abero_struc* left;
 	struct nodo_abero_struc* right;
 	char nome;
@@ -78,9 +80,23 @@ nodo_albero* costrisci_albero_arbitrario () {
 //------------------------------------------------
 
 int conta_nodi(nodo_albero* n) {
-    if (n == NULL) return 0;
+    if (n == NULL) 
+		return 0;
     return 1 + conta_nodi(n->left) + conta_nodi(n->right);
  }
+
+//funzione che conta i nodi in post ordine 
+int contaNodiPost(nodo_albero* a) {
+	if( a == NULL ) 
+		return 0;
+   int cont = 1;   // intanto c'è il nodo a
+   nodo_albero* x = a->left;
+   while ( x != NULL ) {
+	cont = cont + contaNodiPost(x);
+       x = x->right_sibling;
+   } 
+   return cont;
+}
 
 
 int main(int argc, char **argv)

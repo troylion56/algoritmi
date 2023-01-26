@@ -208,14 +208,16 @@ void dfs(nodo* g,int c) {
 
 void visita (nodo_albero* a) {
 	if (a==NULL)
-		return ;
-	else{
-		visita(a->left);
-        printf("%d",a->left);
-		visita(a->right);
-        printf("%d",a->right);
+		return;
+	if (a!=NULL) {
+		printf("visito: %c val: %d\n",a->nome,a->info);
+		if(a->info<n)
+			ricorsiva (a->right,n,ver);
+		else
+			ricorsiva(a->left,n,ver);
 	}
 }
+
 
 nodo_albero* abr (grafo* g) {
 	if(g==NULL)

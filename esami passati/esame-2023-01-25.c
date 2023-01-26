@@ -51,10 +51,8 @@ typedef struct nodo_abero_struc {
 	int info;
 	struct nodo_abero_struc* left;
 	struct nodo_abero_struc* right;
-    struct nodo_abero_struc* parent;
 	char nome;
 }nodo_albero;
-
 
 
 /***************************************************************funzioni grafo*************************************************************************/
@@ -150,44 +148,59 @@ grafo* costruisci_grafo() {
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
 	nodo* n10 = aggiungi_nodo(g);
-	nodo* n11 = aggiungi_nodo(g);
 
- 	/* questa componente ha 2 nodi e 1 arco */
- 	newarco(g,n1,n2);
+ 	newarco(g,n2,n3);
 
- 	/* questa componente ha 3 nodi e 1 archi */
- 	newarco(g,n3,n4);
  	newarco(g,n4,n5);
+ 	newarco(g,n5,n6);
 	
-	/* questa componente ha 3 nodi e 3 archi */
-	newarco(g,n6,n7);
+
 	newarco(g,n7,n8);
-	newarco(g,n8,n6);
-	
-	/* questa componente ha 3 nodi e 2 archi */
- 	newarco(g,n9,n10);
- 	newarco(g,n10,n11);
-	
-	
+	newarco(g,n8,n9);
+	newarco(g,n9,n10);
+		
  	return g;
+
+/* 		n1  n2-n3      n4-n5-n6       n7-n8-n9-n10*/
+
 }
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
-void inserimento(nodo_albero* a,int val,nodo_albero* p) {
-    if(a==NULL) {
-          a=malloc(sizeof(nodo_albero));
-          a->info=val;
-          a->left=NULL;
-          a->right=NULL;
-          a->parent=p;
-    }
-    else {
-        if(a->info>val) {
-            inserimento(a->left,val,a);
+
+nodo_albero* nuovoNodo(int info) {
+    nodo_albero* node = (nodo_albero*) malloc(sizeof(nodo_albero));
+    node->info = info;
+    node->left = NULL;
+    node->right = NULL;
+    return(node);
+}
+
+
+void stampaalbero (nodo_albero* root) {
+	if(root !=NULL) {
+		printf("\nnodo in questione: %d, suo figlio sinistro: %d, suo figlio destro: %d",root->info, root->left,root->right);
+		stampaalbero(root->left);
+		stampaalbero(root->right);
+	}
+}
+
+
+void aggiungi_nodo_albero(nodo_albero* root, int info) {
+    if (info < root->info) {
+        if (root->left != NULL) {
+            aggiungi_nodo_albero(root->left, info);
+        } 
+		else {
+            root->left = nuovoNodo(info);
         }
-        else {
-            inserimento(a->right,val,a);
+    } 
+	else if (info > root->info) {
+        if (root->right != NULL) {
+            aggiungi_nodo_albero(root->right, info);
+        } 
+		else {
+            root->right = nuovoNodo(info);
         }
     }
 }
@@ -205,19 +218,6 @@ void dfs(nodo* g,int c) {
 	la=la->next;
 	}
 }
-
-void visita (nodo_albero* a) {
-	if (a==NULL)
-		return;
-	if (a!=NULL) {
-		printf("visito: %c val: %d\n",a->nome,a->info);
-		if(a->info<n)
-			ricorsiva (a->right,n,ver);
-		else
-			ricorsiva(a->left,n,ver);
-	}
-}
-
 
 nodo_albero* abr (grafo* g) {
 	if(g==NULL)
@@ -242,13 +242,16 @@ nodo_albero* abr (grafo* g) {
 		vett [temp2->info->color]++;
 		temp2=temp2->next;
 	}
+	for(int i=1;i<=colore;i++) {
+		printf("vett [%d]=%d\n",i,vett[i]);	
+	}
 	//-------------------------
-    nodo_albero* root=malloc(sizeof(nodo_albero));
-    root->info=vett[1];
-    for (int i=2;i<colore;i++) {
-        inserimento(root,vett[i],NULL);
-    }
-   // visita;
+    nodo_albero* root=nuovoNodo(vett[1]);
+	for (int i=1;i<=colore;i++) {
+		aggiungi_nodo_albero(root,vett[i]);
+	}
+	stampaalbero(root);
+	return root;
 }
 
 
@@ -256,7 +259,8 @@ nodo_albero* abr (grafo* g) {
 int main(int argc, char **argv){
 	
 	grafo* grap=costruisci_grafo();
-	printf("%d",abr(grap));
+	abr(grap);
+
 	
 }
 //-------------------------------------------------------

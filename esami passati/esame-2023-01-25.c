@@ -190,17 +190,21 @@ void aggiungi_nodo_albero(nodo_albero* root, int info) {
     if (info < root->info) {
         if (root->left != NULL) {
             aggiungi_nodo_albero(root->left, info);
+			printf("\nho aggiunti un figlio sinistro %d con info %d",root->left,info);
         } 
 		else {
             root->left = nuovoNodo(info);
+			printf("\nho cretato un nuovo nodo con info %d",info);
         }
     } 
 	else if (info > root->info) {
         if (root->right != NULL) {
             aggiungi_nodo_albero(root->right, info);
+			printf("\nho aggiunti un figlio sinistro %d con info %d",root->right,info);
         } 
 		else {
             root->right = nuovoNodo(info);
+			printf("\nho cretato un nuovo nodo con info %d",info);
         }
     }
 }
@@ -261,7 +265,5 @@ int main(int argc, char **argv){
 	
 	grafo* grap=costruisci_grafo();
 	abr(grap);
-
-	
 }
 //-------------------------------------------------------

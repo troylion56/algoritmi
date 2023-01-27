@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 2023-01-25 esame mio che probabilemnte devo rifare mannaggia al cazzo */	
-/*funzione che ti tornava un albero binario di ricerca dove ogni nodo era il numero dei nodi di ogni componente del grafo*/	
+/*nodo_albero* abr_da_grafo (grafo* g) 
+che accetti in input un puntatore g ad un grafo non orientato rappresentato tramite oggetti e riferimenti in
+cui si assume (non deve essere verificato dalla funzione) che ogni componente connessa di g abbia un numero 
+di nodi diverso dalle altre. La funzione restituisce in output un puntatore alla radice di un albero binario 
+di ricerca (di altezza qualsiasi) che memorizza le dimensioni (il numero di nodi) delle componenti connesse 
+di g. Se il grafo è NULL o non ha nessun nodo, la funzione ritorna NULL*/	
 
 
 
@@ -228,7 +233,7 @@ void dfs(nodo* g,int c) {
 	}
 }
 
-nodo_albero* abr (grafo* g) {
+nodo_albero* abr_da_grafo (grafo* g) {
 	if(g==NULL)
         return 0;
 	elem_nodi* scorri1=g->nodi;
@@ -269,6 +274,6 @@ nodo_albero* abr (grafo* g) {
 int main(int argc, char **argv){
 	
 	grafo* grap=costruisci_grafo();
-	abr(grap);
+	abr_da_grafo(grap);
 }
 //-------------------------------------------------------

@@ -199,15 +199,16 @@ void stampaalbero (nodo_albero* root) {
 
 
 void aggiungi_nodo_albero(nodo_albero* root, int info) {
-    if (info < root->info) {
+    if (info < root->info) {		//se il valore info è minore di root->info e se hai gia un nodo inserisci
         if (root->left != NULL) {
             aggiungi_nodo_albero(root->left, info);
         } 
-		else {
+		else {					//altiemnti crealo
             root->left = nuovoNodo(info);
 			printf("\ncreo e aggiungo a sinistra: %d",info);
         }
-    } 
+    }
+	//stessa cosa qui ma se è piu grande metti a destra
 	else if (info > root->info) {
         if (root->right != NULL) {
             aggiungi_nodo_albero(root->right, info);

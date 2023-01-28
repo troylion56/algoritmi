@@ -113,66 +113,8 @@ nodo_albero* costrusci_albero () {
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
-void ricorsiva (nodo_albero* a, int n, int* ver) {
-	if (a!=NULL) {
-		printf("visito: %c val: %d\n",a->nome,a->info);
-		if(a->info==n) {
-			*ver=1;
-		}
-		else {
-			if(a->info<n) {
-				ricorsiva (a->right,n,ver);
-			}
-			else{
-				ricorsiva(a->left,n,ver);
-			}
-		}
-	}
-}
-
-int supporto (nodo_albero* a, int n) {
-	/*funzione che chiama la ricorsione*/
-	int *ver;
-	*ver=0;
-	ricorsiva (a, n, ver);
-	return *ver;
-}
-
-
-
-void solo_un_figlio_con_puntatore_esterno (nodo_albero* a, int* ver) {
-	if(a==NULL)
-		return ;
-	if( (a->right==NULL && a->left!=NULL) || (a->right!=NULL && a->left==NULL))
-		*ver ++;
-	solo_un_figlio_con_puntatore_esterno(a->left,ver);
-	solo_un_figlio_con_puntatore_esterno(a->right,ver);
-}
-
-int sup (nodo_albero*  a){
-	int* ver;
-	*ver=0;
-	solo_un_figlio_con_puntatore_esterno(a,ver);
-	return *ver;
-}
-
 
 int main () {
     nodo_albero* alb=costrusci_albero();
-    printf("%d", supporto(alb,1));
-	printf("%d",sup(alb));
 }
  
-
-/*
-//funzione che calcola i nodi a profondita arbitrario
-int profonditaArb (albero n,int v) {
-	if(n==NULL)
-		return 0;
-	else{
-		if(v==0)
-			return 1;
-		else 
-			return profonditaArb(n->dx,v-1)+profonditaArb(n->sx,v);
-	}
-} */

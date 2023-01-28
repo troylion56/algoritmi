@@ -6,8 +6,8 @@
 typedef struct nodo_abero_struc {
 	int info;
 	struct nodo_abero_struc* parent;
-	struct nodo_abero_struc* left;
-	struct nodo_abero_struc* right;
+	struct nodo_abero_struc* left;		// primo figlio (sinistro)
+	struct nodo_abero_struc* right;		// fratello destro
 	char nome;
 }nodo_albero;
 //--------------------------------------------------------------------------------------------------------
@@ -79,6 +79,20 @@ nodo_albero* costrisci_albero_arbitrario () {
 		H-I-L  M N      3 */
 //------------------------------------------------
 
+//funzione che stanpa come è fatto l'albero in pre ordine
+void stampa_albero_preordine(nodo_albero* a){
+
+  if( a == NULL) 
+  	return;
+  printf("%d ",a->info);  
+  nodo_albero* x = a->left;
+  while( x != NULL ) {
+      stampa_albero_preordine(x);
+      x = x->right;
+  }
+}
+
+
 int conta_nodi(nodo_albero* n) {
     if (n == NULL) 
 		return 0;
@@ -93,14 +107,73 @@ int contaNodiPost(nodo_albero* a) {
    nodo_albero* x = a->left;
    while ( x != NULL ) {
 	cont = cont + contaNodiPost(x);
-       x = x->right_sibling;
+       x = x->right;
    } 
    return cont;
 }
+
+//funzione che calcola l'altezza 
+int altezza_albero(nodo_albero* a) {
+
+    if( a == NULL ) 
+		return -1;
+    int max = -1;
+    nodo_albero* x = a->left;
+    while( x != NULL ) {
+      int altezza_figlio = altezza_albero(x);
+      if( altezza_figlio > max ) {
+        max = altezza_figlio;
+      }
+      x = x->right;
+    }
+    return max + 1;
+}
+
+int verifica_binario(nodo_albero* a) {
+
+  if ( a == NULL ) 
+  	return 1;
+  int contatore = 0;  // zero figli
+  int i_sottoalberi_soddisfano = 1;  // true
+  nodo_albero* x = a->left;
+  while ( x != NULL ) {
+     contatore++;
+     i_sottoalberi_soddisfano = i_sottoalberi_soddisfano && verifica_binario(x);
+     x = x->right;
+  }
+  return (contatore <= 2) && i_sottoalberi_soddisfano;
+}
+
+int grado_massimo(nodo_albero* a) {
+
+  if ( a == NULL ) 
+  	return 1;
+  // verifico se io soddisfo la codizione
+  int contatore = 0;  // zero figli
+  nodo_albero* x = a->left;
+  while ( x != NULL ) {
+     contatore++;
+     x = x->right;
+  }
+  int l = grado_massimo(a->left);
+  int r = grado_massimo(a->right);
+  int max = l;
+  if( r > l ) 
+	max = r;
+  if( contatore > max ) 
+  	return contatore;
+  return max;
+}
+
+
 
 
 int main(int argc, char **argv)
 {
 	nodo_albero* alb=costrisci_albero_arbitrario();
-	printf("\n%d",conta_nodi(alb));
+	stampa_albero_preordine(alb);
+	printf("\nconta i nodi del albero arbitrario:            %d",conta_nodi(alb));
+	printf("\n restituisce l'altezza del albero arbitrario:  %d",altezza_albero(alb));
+	printf("\n verificare se l'abero arbitario e' binario :  %d",verifica_binario(alb));
+	printf("\nrestituisce il grado massimo di un albero     :  %d",grado_massimo(alb));
 }

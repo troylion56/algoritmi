@@ -363,16 +363,22 @@ int verifica_info_alt_albero_ric (nodo_albero* a) {
 
 
 
+//-------------verifica se l'albero è un cammino-------------
+int sono_un_cammino(nodo_albero* a) {
 
-int verificaf (nodo_albero* a) {
-	int verificato=1;
-	if(a==NULL)
-		return verificato;
-	if(a->left!=NULL && a->right==NULL)
-		verificato=0;
-
-	return verificato && verificaf (a->left);
+	if( a == NULL ) 
+  		return 1; // suppongo che un albero vuoto sia un cammino
+	if( (a->left == NULL) && (a->right == NULL) )
+  		return 1;
+	if( (a->left != NULL) && (a->right != NULL) ) 
+		return 0;  // due figli
+	// se sono qui uno tra a->left e a->right e' diverso da NULL e l'altro e' uguale a NULL
+  	if( a->left != NULL ) 
+		return sono_un_cammino(a->left);
+  	return sono_un_cammino(a->right); 
 }
+//-------------------------------------------------------
+
 
 
 //---------------------main------------------------------
@@ -398,9 +404,8 @@ int main(int argc, char **argv){
 	printf("\nquanti nodi hanno altezza info = al altezza nodo                         	: %d",nodi_info_uguale_altezza_nodo_cambia(alb));
 	printf("\nRestituisco true se tutti i nodi->info sono uguali all'altezza del nodo  	: %d",verifica_tutti_info_altezza(alb,0));
 	printf("\nRestituisco true se tutti i nodi->info sono uguali all'altezza totale    	: %d",verifica_info_alt_albero_ric(alb));
+	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
 	printf("\n\n\n\n");
-
-	printf("\n %d", verificaf(alb));
 }
 //-------------------------------------------------------
 

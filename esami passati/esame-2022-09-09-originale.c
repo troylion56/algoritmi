@@ -1,7 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 09-09-2022*/			//corretto
-/*int verifica(oodo_albero* a, grafo* g)
+/*Discuti la complessità computazionale delle seguenti procedure nel caso peggiore fornendo O‐grande,
+Omega e Theta in funzione del numero n di elementi dell’albero.
+
+
+FUNZIONE(T) //T è un albero binario di interi 
+	L.head = NULL //L è una nuova lista (vuota) di interi 
+	depth = 0 //profondità della radice 
+	FUNZ_RIC(T.root, depth, L)
+	return L
+
+FUNZ_RIC(v, depth, L)
+if( v==NULL ) 
+	return
+if( depth == 3 ) // se la profondità di questo nodo è tre 
+	AGGIUNGI_IN_CODA(L,v.info)
+else
+	AGGIUNGI_IN_TESTA(L,v.info)
+FUNZ_RIC(v.left, depth+1, L)
+FUNZ_RIC(v.right, depth+1, L)
+Assumi che AGGIUNGI_IN_TESTA faccia un numero di operazioni costante e che AGGIUNGI_IN_CODA
+faccia un numero di operazioni proporzionale al numero degli elementi della lista. Descrivi una tipologia di
+albero in cui si verifica il caso peggiore e una tipologia di albero in cui il caso peggiore non si verifica
+(oppure specifica che il caso migliore coincide con il caso peggiore). 
+
+la funzione funzione(T) fa tutte oprazione costanti l'unica cosa che fa è chiamare fun_ric quindi avra la complessita di essa
+funz_ric invece fa la ricorsione quindi thenta(n) dove n sono il numero degli elementi dell'albero.
+il caso peggiore si verifica quando tutti i nodi sono a profondita 3 perche deve fare l'inseriemnto in coda che si fa in thenta(n)
+il caso migliore è sempre theta(n)
+aggiungi in testa fa un numero di operazioni sempre costanti quindi la complessità totale è thenta(n)
+
+*/
+
+
+
+/*int verifica(nodo_albero* a, grafo* g)
 che accetti in imput un puntatore a alla radice di un albero binario di interi e un puntatore g ad un 
 grafo non orientato rappresentato tramite oggetti e riferimenti. La funzione restituisce 1 (cioè true) 
 se esiste auna foglia dell'albero la cui profondita è uguale al numero di nodi alla componete   
@@ -265,12 +299,18 @@ grafo* costruisci_grafo() {
 int prof_foglie (nodo_albero* a, int alt,int dim_gra) {		//dim_gra è la dimensione del sottografo piu grande
 	if(a==NULL)
 		return 0;
-	int l=prof_foglie(a->left,alt+1,dim_gra);
+	int l=prof_foglie(a->left,alt+1,dim_gra);			//mi faccio la visita completa dell'albero 
 	int r=prof_foglie(a->right,alt+1,dim_gra);
 	if(alt==dim_gra && (a->left==NULL && a->right==NULL)) 	//se l'altezza del nodo è uguale al sottografo piu grande fai la verica della foglia altrimenti non fai il confornto
 		return 1;
 	return prof_foglie(a->left,alt+1,dim_gra) || prof_foglie(a->right,alt+1,dim_gra);
 	//oppure visto che lho chiamata con le variabili posso fare return l ||  r	sono uguali
+}
+
+//funzione che chiama ricorsivamente prf foglie 
+int prof_foglie_ric(nodo_albero* a, int dim_gra) {
+	return prof_foglie(a,0,dim_gra);
+
 }
 
 void dfs(nodo* g,int c) {
@@ -286,7 +326,7 @@ void dfs(nodo* g,int c) {
 	}
 }
 
-int verifica (grafo* g, nodo_albero* a, int h) {
+int verifica (grafo* g, nodo_albero* a) {
 	if(g==NULL && a==NULL)
 		return 0;
 	if(g==NULL || a==NULL)
@@ -303,7 +343,7 @@ int verifica (grafo* g, nodo_albero* a, int h) {
 	}
 	printf("\n");
 	
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//----------riempi vettore---------------
 	elem_nodi* temp2=g->nodi;
@@ -321,7 +361,7 @@ int verifica (grafo* g, nodo_albero* a, int h) {
 	}
 	printf("la componente maggiore ha %d nodi\n",max);
 	
-	if(prof_foglie(a,h,max))
+	if(prof_foglie_ric(a,max))
 		return 1;
 	return 0;
 }
@@ -336,7 +376,7 @@ int main(int argc, char **argv){
 	grafo* grap=costruisci_grafo();
 	nodo_albero* alb=costrusci_albero();
 	
-	printf("%d",verifica(grap,alb,0));
+	printf("%d",verifica(grap,alb));
 	
 }
 //-------------------------------------------------------

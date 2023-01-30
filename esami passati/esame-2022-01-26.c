@@ -198,7 +198,7 @@ int verifica(grafo* g) {
 		scorri1=scorri1->next;
 	}
 	printf("\n");
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//----------riempi vettore---------------
 	elem_nodi* temp2=g->nodi;

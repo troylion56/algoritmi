@@ -1,6 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 05-07-2022*/ 			//funziona
+
+/*Discuti la complessità computazionale delle seguenti procedure nel caso peggiore fornendo O‐grande,
+Omega e Theta in funzione del numero n di elementi dell’albero.
+FUNZIONE(T)  T è un albero binario di interi 
+L.head = NULL  L è una nuova lista (vuota) di interi 
+FUNZ_RIC(T.root,L)
+return L
+FUNZ_RIC(v,L)
+if( v==NULL ) return -1
+if( ALTEZZA_SOTTOALBERO(v)%2 == 0 ) se l’altezza del sottalbero è pari 
+AGGIUNGI_IN_TESTA(L,v.info)
+FUNZ_RIC(v.left,L)
+FUNZ_RIC(v.right,L)
+ALTEZZA_SOTTALBERO(v)
+if( v == NULL ) return -1
+l = ALTEZZA_SOTTALBERO(v.left)
+r = ALTEZZA_SOTTALBERO(v.right)
+if (l >= r)
+return 1 + l
+else
+return 1 + r
+Assumi che AGGIUNGI_IN_TESTA faccia un numero di operazioni costante. Descrivi una tipologia di albero
+in cui si verifica il caso peggiore e una tipologia di albero in cui il caso peggiore non si verifica (per esempio
+si verifica il caso migliore).
+
+funzione non fa niente ha semplicemente la complessita di fun_ric
+fun ric si visita tutto l'albero quidni ha una complessita di theta(n)
+aggiungi in testa fa sempre un numero di operazioni costante quindi indipendentemente dall'albere fa theta(1) 
+altezza_sottoalbero costa theta(n)
+
+quindi la complessita totale è theta(n)
+
+*/
+
+
+
+
+
+
 /*int verifica(grafo* g)
 che accetti in input un puntatore g ad un grafo non orientato rappresentato tramite oggetti e riferimenti.
 La funzione restituisce 1 (cioè true) se il grafo contiene almeno una componente connessa il cui numero di
@@ -202,7 +241,7 @@ int verifica(grafo* g) {
 		scorri1=scorri1->next;
 	}
 	printf("\n");
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//----------riempi vettore---------------
 	elem_nodi* temp2=g->nodi;

@@ -328,7 +328,7 @@ int verifica (grafo*g,nodo_albero* a) {
 	printf("\n");
 	
 	/*ora alloco memoria al vettore*/
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//----------riempi vettore---------------
 	elem_nodi* temp2=g->nodi;

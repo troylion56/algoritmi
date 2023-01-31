@@ -299,7 +299,7 @@ int verifica(int h, nodo_albero* a, grafo* g) {
 	}
 	
 	/*alloco memoria al vettore*/
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//-----riempo il vettore----------
 	elem_nodi* temp2=g->nodi;

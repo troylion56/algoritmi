@@ -306,7 +306,7 @@ int verifica (grafo* g,nodo_albero* a) {
 		}
 		scorri1=scorri1->next;
 	}
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	elem_nodi* scorri2=g->nodi;
 	while(scorri2!=NULL) {
 		vett[scorri2->info->color]++;

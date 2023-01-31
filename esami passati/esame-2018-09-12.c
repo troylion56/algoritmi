@@ -307,7 +307,7 @@ int foglie_comp (grafo* g,nodo_albero* a) {
 		scorri1=scorri1->next;
 	}
 	printf("\n");
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	//--------riempi il vettore------
 	elem_nodi* temp2=g->nodi;

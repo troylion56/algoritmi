@@ -298,7 +298,7 @@ int verifica (nodo_albero* a,grafo* g) {
 	}
 	printf("\n");
 	
-	int* vett=(int*)calloc(colore,sizeof(int));
+	int* vett=(int*)calloc(colore+1,sizeof(int));
 	
 	
 	//----------riempi vettore---------------

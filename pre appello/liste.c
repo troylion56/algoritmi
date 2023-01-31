@@ -43,7 +43,6 @@ void stampaLista (puntaLista l) {
 		return;
 	}
 	else {
-		printf("\nLISTA:");
 		puntaLista l;
 		while(l!=NULL) {
 			printf("[%d]",l->info);
@@ -252,9 +251,11 @@ int conta_elementi_comuni (puntaLista l1, puntaLista l2){
 //------------------------------------------------------------MAIN--------------------------------------------------------------
 int main()
 {
+	printf("La prima lista: ");
 	puntaLista l = costruisci_lista();
 	stampaLista(l);
 
+	printf("La seconda lista: ");
 	puntaLista l1=costruisci_lista1();
 	stampaLista(l1);
     printf("\nRestituisco true se il primo e' uguale dell'ultimo                                     : %d",ultimo_uguale_primo(l));

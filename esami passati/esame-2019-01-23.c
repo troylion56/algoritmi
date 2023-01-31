@@ -333,7 +333,7 @@ int verifica (grafo* g, nodo_albero* a) {
 		scorri1=scorri1->next;
 	}
 	
-	int* vett=(int*)calloc(colore,sizeof(int));		//vettore dove inserisco tutti i valori dei sottografi (inserisco le dimensioni dei sottografi)
+	int* vett=(int*)calloc(colore+1,sizeof(int));		//vettore dove inserisco tutti i valori dei sottografi (inserisco le dimensioni dei sottografi)
 	
 	//----------riempi vettore---------------
 	elem_nodi* temp2=g->nodi;

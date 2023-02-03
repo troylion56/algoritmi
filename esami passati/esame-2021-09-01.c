@@ -1,6 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 01-09-2021*/					//funziona
+
+/*Discuti la complessità computazionale della seguente procedura nel caso peggiore fornendo O‐grande,
+Omega e Theta in funzione del numero n di elementi dell’albero.
+FUNZIONE(T)  T è un albero binario di interi 
+L.head = NULL  L è una nuova lista (vuota) di interi 
+FUNZ_RIC(T.root,L)
+return L
+FUNZ_RIC(v,L)
+if(v==NULL) return
+if((v.left == NULL) && (v.right == NULL))
+AGGIUNGI_IN_CODA(L,v.info)
+RIMUOVI_IN_TESTA(L)
+else
+AGGIUNGI_IN_TESTA(L,v.info)
+RIMUOVI_IN_CODA(L)
+FUNZ_RIC(v.left,L)
+FUNZ_RIC(v.right,L)
+Assumi che AGGIUNGI_IN_CODA e RIMUOVI_IN_CODA facciano un numero di operazioni proporzionale alla
+lunghezza della lista corrente mentre AGGIUNGI_IN_TESTA e RIMUOVI_IN_TESTA facciano un numero di
+operazioni costante
+
+funzione esegue solo istruzioni di theta(1) apparte per la chiamta ricorsiva quindi avra la complessità di essa
+funz_ric fa la visita completa quindi la complessita della ricorsione è theta(n) 
+aggiungi in coda e rimuovi in coda fanno operazione theta(n)
+aggiungi in testa e rimuovi in testa fanno un numero di operazioni costanti quindi theta(1)
+quindi la complessita complessiva è theta(n) poiche essendo l'albero iniziale vuoto io per fare l'inserimento in coda 
+o la rimozione faro comunque un solo passo*/
+
+
+
+
 /* int verifica(nodo_albero* a, grafo* g)
 che accetti in input un puntatore a alla radice di un albero binario di interi e un puntatore g ad un grafo
 non orientato rappresentato tramite oggetti e riferimenti. La funzione restituisce 1 (cioè true) se la

@@ -249,6 +249,11 @@ int verifica(grafo* g) {
 		vett [temp2->info->color]++;
 		temp2=temp2->next;
 	}
+	//-------stampo il vettore 
+	printf("\n");
+	for (int i=1;i<=colore;i++) {
+		printf("elelemnto vett [%d]=%d\n",i,vett[i]);
+	}
 	
 	/*faccio anche una stampa cosi vedo i sottografi e con che colore li confronto*/
 	for(int i=1;i<=colore;i++) {

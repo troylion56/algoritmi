@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*int verifica(grafo* g)
-che accetti in input un puntatore g ad un grafo non orientato rappresentato tramite oggetti e riferimenti.
-La funzione restituisce 1 (cioè true) se il grafo contiene almeno una componente connessa il cui numero di
-nodi è pari al numero di componenti connesse del grafo stesso, altrimenti la funzione restituisce 0 (cioè
-false). Se il grafo è vuoto (cioè uguale a NULL) la funzione ritorna 1 (true).*/
-
-
+//------------------------------------------------STRUTTURE GRAFO------------------------------------------
 typedef struct elem_lista_nodi elem_nodi;
 typedef struct elem_lista_archi elem_archi;
 
@@ -48,7 +42,9 @@ typedef struct {
 	elem_archi* archi; // lista degli archiclTabCtrl
 	elem_nodi* nodi; // lista dei nodi
 }grafo;
+//--------------------------------------------------------------------------------------------------------
 
+//------------------------------------------STRUTTRE ALBERO-----------------------------------------------
 /*nodo di un albero*/
 typedef struct nodo_abero_struc {
 	int info;
@@ -56,7 +52,7 @@ typedef struct nodo_abero_struc {
 	struct nodo_abero_struc* right;
 	char nome;
 }nodo_albero;
-
+//--------------------------------------------------------------------------------------------------------
 
 /***************************************************************funzioni albero*****************************************************************/
 //----------------------new nodo-----------------------
@@ -120,7 +116,7 @@ nodo_albero* costrusci_albero () {
 	nodo_albero* c=inserimentofiglioleft(a,3,'C');					//filgio left di a (c)
 	nodo_albero* d=inserimentofilgioright(a,4,'D');					//filgio right di a (d)
 	
-	nodo_albero* e=inserimentofilgioright(b,5,'E');					//filgio left di b (e)
+	nodo_albero* e=inserimentofiglioleft(b,5,'E');					//filgio left di b (e)
 	
 	nodo_albero* f=inserimentofiglioleft(d,6,'F');					//figlio left di b (f)
 	nodo_albero* g=inserimentofilgioright(d,7,'G');					//figlio right di b (g)
@@ -133,11 +129,10 @@ nodo_albero* costrusci_albero () {
 	return n;
 	
 } 
-
-/*           n
- *          / \ 
- *         a   b
- *        /\    \ 
+/*            n
+ *          /   \ 
+ *         a     b
+ *        /\     / 
  *       c d     e
  *         /\    /\
  *         f g  h  i
@@ -240,56 +235,35 @@ grafo* costruisci_grafo() {
  	nodo* n7 = aggiungi_nodo(g);
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
+ 	nodo* n10 = aggiungi_nodo(g);
+ 	nodo* n11 = aggiungi_nodo(g);
 
- 	/* questa componente ha 2 nodi e 1 arco */
+ 	/* questa componente ha 3 nodi e 2 archi */
  	newarco(g,n1,n2);
+ 	newarco(g,n1,n3);
 
- 	/* questa componente ha 3 nodi e 3 archi */
- 	newarco(g,n3,n4);
- 	newarco(g,n4,n5);
-	newarco(g,n5,n3);
+ 	/* questa componente ha 3 nodi e 2 archi */
+ 	newarco(g,n5,n4);
+ 	newarco(g,n5,n6);
 	
-	/* questa componente ha 4 nodi e 3 archi */
- 	newarco(g,n6,n7);
+	/* questa componente ha 2 nodi e 2 archo */
  	newarco(g,n7,n8);
-	newarco(g,n8,n9);
+ 	
+ 	
+ 	/* questa componente ha 3 nodi e 2 archi */
+ 	newarco(g,n9,n10);
+ 	newarco(g,n10,n11);
  	
  	return g;
 }
+/*       n1-n2   n5-n4  n7-n8   n9-n10-n11
+ *       |       |                    
+ *       n3      n6                           */
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
 
-void dfs (nodo* g,int,c) {
-    g->color=c;
-    elem_archi* la=g->archi;
-    while (la!=NULL) 
-    {
-        nodo* altronodo=la->info->from;
-        if(altronodo==g) 
-            altronodo=la->info->to;
-        if(altronodo->color==0)
-            dfs(altronodo,c);
-        la=la->info;
-    }
-}
 
-int grafo(grafo*g) {
-    if(g==NULL)
-        return 0;
-    int colore=0;
-    elem_nodi* scorri=g->nodi;
-    while (scorri!=NULL)
-    {
-        if(scorri->info->color==0) {
-            colore++;
-            dfs(scorri->info,colore);
-        }
-        scorri=scorri->next;
-    }
-    int* vett
-    
-}
 
 
 
@@ -297,10 +271,8 @@ int grafo(grafo*g) {
 //---------------------main------------------------------
 int main(int argc, char **argv){
 	
-	grafo* grap=costruisci_grafo();
-	nodo_albero* alb=costrusci_albero();
-	
-	printf("%d",verifica(grap,alb));
+	grafo* graf=costruisci_grafo();
+	nodo_albero* alb=costrusci_albero(); 
 	
 }
 //-------------------------------------------------------

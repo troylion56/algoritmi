@@ -1,6 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 /*esame 02-07-2021*/       /*corretta l'unica cosa mi restituisce l'altezza dell'albero sbagliata la profondia è giusta */
+
+
+/*Discuti la complessità computazionale della seguente procedura nel caso peggiore fornendo O‐grande,
+Omega e Theta in funzione del numero n di elementi dell’albero.
+FUNZIONE(T) /* T è un albero binario di interi */
+L.head = NULL /* L è una nuova lista (vuota) di interi */
+FUNZ_RIC(T.root,L)
+return L
+FUNZ_RIC(v,L)
+if(v==NULL) return
+if((v.left != NULL) && (v.right != NULL))
+AGGIUNGI_IN_CODA(L,v.info)
+else
+AGGIUNGI_IN_TESTA(L,v.info)
+FUNZ_RIC(v.left,L)
+FUNZ_RIC(v.right,L)
+Assumi che AGGIUNGI_IN_CODA faccia un numero di operazioni proporzionale alla lunghezza della lista
+corrente mentre AGGIUNGI_IN_TESTA faccia un numero di operazioni costante*/
+
+
 /*int verifica(nodo_albero* a, grafo* g)
 che accetti in input un puntatore a alla radice di un albero di grado arbitrario di interi e un puntatore g ad
 un grafo non orientato rappresentato tramite oggetti e riferimenti. La funzione restituisce 1 (cioè true) se

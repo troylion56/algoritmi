@@ -265,6 +265,75 @@ grafo* costruisci_grafo() {
 
 
 
+int profondita (nodo_albero* a,int prof){
+	if(a==NULL)	
+		return -1;
+	if(a->left==0 && a->right==0)
+		return prof;
+	int l=profondita(a->left,prof+1);
+	int r=profondita(a->right,prof+1);
+	if(l==-1)
+		return r;
+	if(r==-1)
+		return l;
+	if(r<l)
+		return r;
+	return l;
+	
+	
+}
+
+
+void dfs (nodo* g,int c) {
+	g->color=c;
+	elem_archi* la=g->archi;
+	while (la!=NULL)
+	{
+		nodo* altro_nodo=la->info->from;
+		if(altro_nodo==g)
+			altro_nodo=la->info->to;
+		if(altro_nodo->color==0) 
+			dfs(altro_nodo,c);
+		la=la->next;
+	}
+}
+
+int verifica(nodo_albero* a, grafo* g) {
+	if(g==NULL || a==NULL) 
+		return 0;
+	if(g==NULL && a==NULL)
+		return 0;
+	int colore=0;
+	elem_nodi* scorri=g->nodi;
+	while (scorri!=NULL)
+	{
+		if(scorri->info->color==0) {
+			colore++;
+			dfs(scorri->info,colore);
+		}
+		scorri=scorri->next;
+	}
+	int* vett=(int*)calloc(colore+1,sizeof(int));
+	elem_nodi* temp=g->nodi;
+	while (temp!=NULL)
+	{
+		vett[temp->info->color]++;
+		temp=temp->next;
+	}
+	int profmeno=profondita(a,0);
+
+	int min=vett[1];
+	for(int i=2;i<=colore;i++){
+		if(vett[i]<min)
+			min=vett[i];
+	}
+	
+	return min=profmeno;
+
+}
+
+
+
 
 
 
@@ -273,6 +342,7 @@ int main(int argc, char **argv){
 	
 	grafo* graf=costruisci_grafo();
 	nodo_albero* alb=costrusci_albero(); 
+	printf("%d",verifica(alb,graf));
 	
 }
 //-------------------------------------------------------

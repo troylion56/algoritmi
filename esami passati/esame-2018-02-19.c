@@ -1,5 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*
+Discuti la complessità computazionale nel caso peggiore (in termini di O‐grande, Omega e Theta) delle
+seguenti procedure in funzione del numero n di elementi dell’albero. Assumi che AGGIUNGI_IN_CODA e
+CERCA_IN_CODA facciano entrambe un numero di operazioni proporzionali alla lunghezza della lista
+passata in input.
+FUNZIONE(T) T è un albero binario di interi 
+L.head = NULL /L è una nuova lista (vuota) di interi 
+FUNZ_RIC(T.root,L)
+return L
+FUNZ_RIC(v,L)
+if(v==NULL) return
+if(CERCA_IN_CODA(L,v.info) == FALSE)
+AGGIUNGI_IN_CODA(L,v.info)
+FUNZ_RIC(v.left,L)
+FUNZ_RIC(v.right,L) 
+
+la funzione funzione non fa nulla l'unica operazione che fa è chiamare funz_ric quindi avra la complessita di quella 
+funz_ric fa una ricorsione quindi è tetha(n) poi in piu fa la funzione cerca in coda ma essendo vuota la complessità 
+totale sara tetha(n^2) perche piano piano fai l'aggiunta inizialmente è vuota */
+
+
+
+
 /*esame 19-02-2018			*/ //corretto
 /*int verifica(grafo_oggetti* g, nodo_albero* a)
 che accetti in input un puntatore ad grafo non orientato g rappresentato tramite oggetti e un puntatore a
@@ -255,8 +278,9 @@ grafo* costruisci_grafo() {
 
 //funzione che restituisce il massimo tra due elementi
 int massimo(int a, int b) {
-	if (a > b) 
+	if (a > b) {
 		return a;
+	}
 	return b;
 }
 
@@ -274,13 +298,13 @@ return massimo(a->info,massimo(l, r));	//faccio il confronto tra quello attuale 
 
 
 //funzione che ritorna la profondita del nodo con il magigor valore 
-int profondita_nodo(nodo_albero* a, int id) {
+int profondita_nodo(nodo_albero* a, int id,int prof) {
 	if (a == NULL) 
 		return -1;
 	if (a->info == id) 
-		return 0;
-	int l = profondita_nodo(a->left, id);
-	int r = profondita_nodo(a->right, id);
+		return prof;
+	int l = profondita_nodo(a->left, id,prof+1);
+	int r = profondita_nodo(a->right, id,prof+1);
 	int max = massimo(l, r);
 	if (max == -1) 
 		return -1; // non lo abbiamo trovato
@@ -289,7 +313,7 @@ int profondita_nodo(nodo_albero* a, int id) {
 }
 //funzione che chiama ricorsivamente quella sopra
 int profondita_nodo_ric (nodo_albero* a) {
-	return profondita_nodo(a,massimo_albero(a));
+	return profondita_nodo(a,massimo_albero(a),0);
 }
 
 

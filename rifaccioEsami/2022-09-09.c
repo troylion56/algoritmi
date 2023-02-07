@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*esame 19-02-2018			*/ //corretto
+/*int verifica(grafo_oggetti* g, nodo_albero* a)
+che accetti in input un puntatore ad grafo non orientato g rappresentato tramite oggetti e un puntatore a
+alla radice di un albero binario di interi. La funzione restituisce 1 se il numero di nodi della componente
+connessa più grande (cioè con più nodi) del grafo è uguale alla profondità del nodo con indice (campo info)
+più alto dell’albero, altrimenti restituisce 0.
+Assumi che l’albero contenga tutti valori interi distinti e non negativi */
+/*allora non cio capito un cazzo quindi per me è la profondita del nodo con campo info piu grande*/
 
-//------------------------------------------------STRUTTURE GRAFO------------------------------------------
 typedef struct elem_lista_nodi elem_nodi;
 typedef struct elem_lista_archi elem_archi;
 
@@ -42,7 +49,6 @@ typedef struct {
 	elem_archi* archi; // lista degli archiclTabCtrl
 	elem_nodi* nodi; // lista dei nodi
 }grafo;
-//--------------------------------------------------------------------------------------------------------
 
 //------------------------------------------STRUTTRE ALBERO-----------------------------------------------
 /*nodo di un albero*/
@@ -111,36 +117,26 @@ nodo_albero* costrusci_albero () {
 	newnodo (&n);
 	
 	nodo_albero* a=inserimentofiglioleft(n,1,'A');				//figlio left della n (a)
-	nodo_albero* b=inserimentofilgioright(n,2,'B');				//filgio right della n (b)
+	nodo_albero* b=inserimentofilgioright(n,1,'B');				//filgio right della n (b)
 	
-	nodo_albero* c=inserimentofiglioleft(a,3,'C');					//filgio left di a (c)
-	nodo_albero* d=inserimentofilgioright(a,4,'D');					//filgio right di a (d)
+	nodo_albero* c=inserimentofiglioleft(a,0,'C');					//filgio left di a (c)
+	nodo_albero* d=inserimentofilgioright(a,1,'D');					//filgio right di a (d)
 	
-	nodo_albero* e=inserimentofiglioleft(b,5,'E');					//filgio left di b (e)
+	nodo_albero* e=inserimentofilgioright(b,9,'E');					//filgio right di b (e)
 	
-	nodo_albero* f=inserimentofiglioleft(d,6,'F');					//figlio left di b (f)
-	nodo_albero* g=inserimentofilgioright(d,7,'G');					//figlio right di b (g)
+	nodo_albero* f=inserimentofilgioright(d,0,'F');					//figlio right di d (f)
 	
-	nodo_albero* h=inserimentofiglioleft(e,8,'H');					//figlio left di e (h)
-	nodo_albero* i=inserimentofilgioright(e,9,'I');					//figlio right di e (i)
+	nodo_albero* g=inserimentofiglioleft(e,1,'G');					//figlio left di e (g)
+	nodo_albero* h=inserimentofilgioright(e,0,'H');					//figlio right di e (h)
 	
-	nodo_albero* l=inserimentofiglioleft(g,10,'L');					//filgio left di g (l)
+	nodo_albero* i=inserimentofiglioleft(f,8,'I');					//figlio left di f (i)
+	
 	
 	return n;
 	
 } 
-/*            n
- *          /   \ 
- *         a     b
- *        /\     / 
- *       c d     e
- *         /\    /\
- *         f g  h  i
- *           /
- *           l            */
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
-
 
 
 /***************************************************************funzioni grafo*************************************************************************/
@@ -235,73 +231,73 @@ grafo* costruisci_grafo() {
  	nodo* n7 = aggiungi_nodo(g);
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
- 	nodo* n10 = aggiungi_nodo(g);
- 	nodo* n11 = aggiungi_nodo(g);
+	nodo* n10 = aggiungi_nodo(g);
 
  	/* questa componente ha 3 nodi e 2 archi */
  	newarco(g,n1,n2);
- 	newarco(g,n1,n3);
+	newarco(g,n1,n3);
 
- 	/* questa componente ha 3 nodi e 2 archi */
- 	newarco(g,n5,n4);
+ 	/* questa componente ha 3 nodi e 3 archi */
+ 	newarco(g,n4,n5);
  	newarco(g,n5,n6);
+	newarco(g,n6,n4);
 	
-	/* questa componente ha 2 nodi e 2 archo */
+	/* questa componente ha 4 nodi e 3 archi */
  	newarco(g,n7,n8);
- 	
- 	
- 	/* questa componente ha 3 nodi e 2 archi */
- 	newarco(g,n9,n10);
- 	newarco(g,n10,n11);
+ 	newarco(g,n8,n9);
+	newarco(g,n9,n10);
  	
  	return g;
 }
-/*       n1-n2   n5-n4  n7-n8   n9-n10-n11
- *       |       |                    
- *       n3      n6                           */
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
 
+int maxTraDue(int a, int b) {
+	if(a<b)
+		return b;
+	else 
+		return a;
+}
 
-
-int profondita (nodo_albero* a,int prof){
-	if(a==NULL)	
+/*funzione che fa la visitita e trova il max*/
+int max (nodo_albero* a,int valore) {
+	if(a==NULL)
 		return -1;
-	if(a->left==0 && a->right==0)
+	int l=max(a->left,valore);
+	int r=max(a->right,valore);
+	return maxTraDue(a->info,maxTraDue(l,r));
+}
+
+/*fun zione che fa la profndita*/
+int prof(nodo_albero* a,int valore) {
+	if(a==NULL)
+		return -1;
+	if(a->info==valore)
 		return prof;
-	int l=profondita(a->left,prof+1);
-	int r=profondita(a->right,prof+1);
-	if(l==-1)
-		return r;
-	if(r==-1)
-		return l;
-	if(r<l)
-		return r;
-	return l;
-	
-	
 }
 
 
-void dfs (nodo* g,int c) {
-	g->color=c;
+
+
+void dfs (nodo* g,int colore) {
+	g->color=colore;
 	elem_archi* la=g->archi;
 	while (la!=NULL)
 	{
 		nodo* altro_nodo=la->info->from;
 		if(altro_nodo==g)
 			altro_nodo=la->info->to;
-		if(altro_nodo->color==0) 
-			dfs(altro_nodo,c);
+		if(altro_nodo->color==0)
+			dfs(altro_nodo,colore);
 		la=la->next;
 	}
 }
 
-int verifica(nodo_albero* a, grafo* g) {
-	if(g==NULL || a==NULL) 
+int verifica(grafo* g, nodo_albero* a) {
+	if(a==NULL || g==NULL)
 		return 0;
-	if(g==NULL && a==NULL)
+	if(a==NULL && g==NULL)
 		return 0;
 	int colore=0;
 	elem_nodi* scorri=g->nodi;
@@ -320,18 +316,17 @@ int verifica(nodo_albero* a, grafo* g) {
 		vett[temp->info->color]++;
 		temp=temp->next;
 	}
-	int profmeno=profondita(a,0);
-
-	int min=vett[1];
-	for(int i=2;i<=colore;i++){
-		if(vett[i]<min)
-			min=vett[i];
+	int max=vett[1];
+	for (int i = 1; i <= colore; i++)
+	{
+		if(vett[i]>max)
+			max=vett[i];
 	}
 	
-	return min=profmeno;
-
+	
+	
+	
 }
-
 
 
 
@@ -339,10 +334,9 @@ int verifica(nodo_albero* a, grafo* g) {
 
 //---------------------main------------------------------
 int main(int argc, char **argv){
-	
-	grafo* graf=costruisci_grafo();
+
 	nodo_albero* alb=costrusci_albero(); 
-	printf("%d",verifica(alb,graf));
+	printf("%d",contaNodi(alb));
 	
 }
 //-------------------------------------------------------

@@ -326,8 +326,7 @@ int verifica_info_alt_albero (nodo_albero* a,int altezza){
 		return 1;
 	if(a->info!=altezza)
 		verifica=0;
-	/*con questa scritta verifico i valori di info e lo confronto con la sua altezza*/
-	//printf("\nnodo: %c\tinfo: %d\th: %d\n",a->nome,a->info,h); 			//attivala solo se non ti aspetti il valore trovato
+	//printf("\nnodo: %c\tinfo: %d\th: %d\n",a->nome,a->info,h); 	/*con questa scritta verifico i valori di info e lo confronto con la sua altezza*/
 	return  verifica && verifica_info_alt_albero(a->left,altezza) && verifica_info_alt_albero(a->right,altezza);
 }
 
@@ -397,9 +396,3 @@ int main(int argc, char **argv){
 	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
 	printf("\n\n\n\n");
 }
-//-------------------------------------------------------
-
-
-
-
-

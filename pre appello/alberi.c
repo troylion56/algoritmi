@@ -64,29 +64,29 @@ nodo_albero* costrusci_albero () {
 	nodo_albero* a=inserimentofiglioleft(r,1,'A');					//figlio left della n (a)
 	nodo_albero* b=inserimentofilgioright(r,1,'B');					//filgio right della n (b)
 	
-	nodo_albero* c=inserimentofiglioleft(a,0,'C');					//filgio left di a (c)
+	nodo_albero* c=inserimentofiglioleft(a,2,'C');					//filgio left di a (c)
 	nodo_albero* d=inserimentofilgioright(a,2,'D');					//filgio right di a (d)
 	
-	nodo_albero* e=inserimentofilgioright(b,0,'E');					//filgio right di b (e)
+	nodo_albero* e=inserimentofilgioright(b,2,'E');					//filgio right di b (e)
 	
 	nodo_albero* f=inserimentofiglioleft(d,3,'F');					//figlio right di d (f)
 	
 	nodo_albero* g=inserimentofiglioleft(e,3,'G');					//figlio left di e (g)
 	nodo_albero* h=inserimentofilgioright(e,3,'H');					//figlio right di e (h)
 	
-	nodo_albero* i=inserimentofiglioleft(f,12,'I');					//figlio left di f (i)
+	nodo_albero* i=inserimentofiglioleft(f,4,'I');					//figlio left di f (i)
 
-	nodo_albero* l=inserimentofiglioleft(h,10,'L');					
-	nodo_albero* m=inserimentofilgioright(h,3,'M');
+	nodo_albero* l=inserimentofiglioleft(h,4,'L');					
+	nodo_albero* m=inserimentofilgioright(h,4,'M');
 
-	nodo_albero* n=inserimentofiglioleft(i,10,'N');
-	nodo_albero* o=inserimentofilgioright(i,3,'O');
+	nodo_albero* n=inserimentofiglioleft(i,5,'N');
+	nodo_albero* o=inserimentofilgioright(i,5,'O');
 
-	nodo_albero* p=inserimentofiglioleft(n,10,'P');
-	nodo_albero* q=inserimentofilgioright(n,3,'Q');
+	nodo_albero* p=inserimentofiglioleft(n,6,'P');
+	nodo_albero* q=inserimentofilgioright(n,6,'Q');
 
-	nodo_albero* s=inserimentofiglioleft(o,10,'S');
-	nodo_albero* t=inserimentofilgioright(o,3,'T');
+	nodo_albero* s=inserimentofiglioleft(o,6,'S');
+	nodo_albero* t=inserimentofilgioright(o,6,'T');
 	
 	return r;
 	
@@ -176,7 +176,7 @@ int ricercaValoreric (nodo_albero* a) {
 
 
 //------------------------------------------------------FUNZIONI SULLE FOGLIE-----------------------------------------------------------
-/*funzione che verifica se sono una foglia*/
+/*funzione che verifica se sono una foglia*/ //!supporto
 int is_foglia (nodo_albero* a){
 	if (a == NULL) 
 		return 0;
@@ -224,16 +224,6 @@ int conta_foglie_dieci (nodo_albero* a) {
 	if(is_foglia(a) && (a->info==10))
 		conta++;
 	return conta + conta_foglie_dieci(a->left)+conta_foglie_dieci(a->right);
-}
-
-/*funzione che conta quante foglie ha il campo info =0*/
-int conta_foglie_zero (nodo_albero* a) {
-	if(a==NULL)
-		return 0;
-	int conta=0;
-	if(is_foglia(a) && (a->info==0))
-		conta++;
-	return conta + conta_foglie_zero(a->left)+conta_foglie_zero(a->right);
 }
 
 /*funzione conta le foglie*/
@@ -303,32 +293,19 @@ int verifica_tutti_info_altezza_ric(nodo_albero* a){
 	return verifica_tutti_info_altezza(a,0);
 }
 
-/*quanti nodi di un albero binario hanno campo info uguale alla distanza dalla radice (è un altro modo per dire profndita)*/
+/*quanti nodi di un albero binario hanno campo info uguale alla distanza dalla radice (è un altro modo per dire profndita) oppure altro modo per dire campo info uguale all'altezza del nodo*/
 /*Troy mannaggia al cazzo non farti fragare da ste cose eh*/
-/*qui l'ho fatto che viene chiamato dal main*/
 int nodi_info_uguale_altezza(nodo_albero* a, int prof){
-    int quanti=0;
-    if(a==NULL)
-        return 0;
-    if(a->info==prof)
-        quanti++;
-    return quanti + nodi_info_uguale_altezza(a->left, prof+1) + nodi_info_uguale_altezza(a->right, prof+1);
-}
-
-/*funzione che conta quanti nodi hanno il campo info uguale all'altezza del nodo */
-/*questa l'ho fatta che viene chiamata da un'altra funzione che passa a e la prof iniziale*/
-int nodi_info_uguale_altezza_ric_nodo_cambia(nodo_albero* a, int altezza){
     int conta=0;
     if(a==NULL)
         return 0;
-    if(a->info==altezza)
+    if(a->info==prof)
         conta++;
-	//printf("\nnodo: %c\tinfo: %d\th: %d\n",a->nome,a->info,altezza);
-    return conta + nodi_info_uguale_altezza_ric_nodo_cambia(a->left, altezza+1) + nodi_info_uguale_altezza_ric_nodo_cambia(a->right, altezza+1);
+	//printf("\nnodo: %c\tinfo: %d\th: %d\n",a->nome,a->info,prof);
+    return conta + nodi_info_uguale_altezza(a->left, prof+1) + nodi_info_uguale_altezza(a->right, prof+1);
 }
-/*funzione principale*/
-int nodi_info_uguale_altezza_nodo_cambia(nodo_albero* a){
-    return nodi_info_uguale_altezza_ric_nodo_cambia(a,0);
+int nodi_info_uguale_altezza_ric(nodo_albero* a) {
+	return nodi_info_uguale_altezza(a,0);
 }
 
 /*Verifica se tutti i nodi di un albero hanno campo info uguale all'altezza del albero usa la funzione altezza*/
@@ -343,7 +320,6 @@ int fun_altezza (nodo_albero* a) {
 	return l+1;			//se fosse stato un albero arbitrario return r
 }
 
-/*questa è la funzione posso chiamarla direttamente dal main scrivendo alb e altezza(alb)*/
 int verifica_info_alt_albero (nodo_albero* a,int altezza){
 	int verifica=1;
 	if (a==NULL)
@@ -352,9 +328,7 @@ int verifica_info_alt_albero (nodo_albero* a,int altezza){
 		verifica=0;
 	/*con questa scritta verifico i valori di info e lo confronto con la sua altezza*/
 	//printf("\nnodo: %c\tinfo: %d\th: %d\n",a->nome,a->info,h); 			//attivala solo se non ti aspetti il valore trovato
-	int l=verifica_info_alt_albero(a->left,altezza);
-	int r=verifica_info_alt_albero(a->right,altezza);
-	return  l && r && verifica;
+	return  verifica && verifica_info_alt_albero(a->left,altezza) && verifica_info_alt_albero(a->right,altezza);
 }
 
 int verifica_info_alt_albero_ric (nodo_albero* a) {
@@ -387,25 +361,39 @@ int sono_un_cammino(nodo_albero* a) {
 int main(int argc, char **argv){
 	
 	nodo_albero* alb=costrusci_albero();
+
 	
-	printf("\nRestituisco true se esiste un valore richiesto (cerco 12)                	: %d",ricercaValoreric(alb));
-	printf("\nRestituisce quanti nodi ci stanno in un albero                          	: %d", nodi_albero(alb));
 	printf("\nrestituisco quanti nodi hanno solamente un figlio                        	: %d",solo_un_figlio(alb));
+	printf("\nRestituisce quanti nodi ci stanno in un albero                          	: %d", nodi_albero(alb));
 	printf("\nCalcola la somma dei valori di tutti i nodi                              	: %d",somma(alb));
-	printf("\nLa profndita meno profonda                                              	: %d ",foglia_meno_profonda_ric(alb));
+	printf("\n\n\n");
+
+
+	printf("\nRestituisco true se esiste un valore richiesto (cerco 12)                	: %d",ricercaValoreric(alb));
+	printf("\n\n\n");
+
+
 	printf("\nNodi che hanno figli foglie                                              	: %d",conta_nodi(alb));
 	printf("\nNodi che hanno esattamente due figli foglie                              	: %d",conta_figli_due_nodi(alb));
-	printf("\nRestituisco true se ci sono esattamente 10 foglie                        	: %d",esattamente_dieci_foglie(alb));
 	printf("\nRestituisco true se ci sta un nodo che ha due figli foglie               	: %d",verifica_figli_due_nodi(alb));
-	printf("\nRestituisco true se ci sta una foglia destro                             	: %d",verifica_esiste_foglia_destra(alb));
 	printf("\nFoglie con campo info=10                                                	: %d",conta_foglie_dieci(alb));
-	printf("\nFoglie con campo info=0                                                  	: %d",conta_foglie_zero(alb));
 	printf("\nConta folgie                                                             	: %d",conta_foglie(alb));
-	printf("\nAltezza dell'albero                                                     	: %d",fun_altezza(alb));
-	printf("\nNodi che hanno campo info uguale alla distanza dalla radice              	: %d",nodi_info_uguale_altezza(alb,0));
-	printf("\nquanti nodi hanno altezza info = al altezza nodo                         	: %d",nodi_info_uguale_altezza_nodo_cambia(alb));
+	printf("\nRestituisco true se ci sono esattamente 10 foglie                        	: %d",esattamente_dieci_foglie(alb));
+	printf("\nRestituisco true se ci sta una foglia destro                             	: %d",verifica_esiste_foglia_destra(alb));
+	printf("\n\n\n");
+
+
+	printf("\nLa profndita meno profonda                                              	: %d ",foglia_meno_profonda_ric(alb));
 	printf("\nRestituisco true se tutti i nodi->info sono uguali all'altezza del nodo  	: %d",verifica_tutti_info_altezza_ric(alb));
+	printf("\nNodi che hanno campo info uguale alla distanza dalla radice              	: %d",nodi_info_uguale_altezza_ric(alb));
+	printf("\n\n\n");
+
+
+	printf("\nAltezza dell'albero                                                     	: %d",fun_altezza(alb));
 	printf("\nRestituisco true se tutti i nodi->info sono uguali all'altezza totale    	: %d",verifica_info_alt_albero_ric(alb));
+	printf("\n\n\n");
+
+
 	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
 	printf("\n\n\n\n");
 }

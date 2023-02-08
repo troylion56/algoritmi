@@ -13,7 +13,7 @@ typedef Lista* puntaLista;			//puntatore alla lista
 //funzione che costruisce la lista poi la invoco nel main fa un inserimento in testa 
 puntaLista costruisci_lista(){
     puntaLista p = NULL;
-    int L[] = {5,4,3,2,1};
+    int L[] = {6,7,3,2,1};
     for(int i = 0; i < 5; i++ ) {
         puntaLista temp = (puntaLista)malloc(sizeof(Lista*));
         temp->info = L[i];
@@ -216,14 +216,18 @@ int verifica_doppioni(puntaLista l){
 	while(precc->next!=NULL){
 		puntaLista succ= l->next;
 		while(succ!=NULL){
-			if(precc->info==succ->info) 
+			printf("\n");
+			if(precc->info==succ->info) {
+				printf("%d,%d",precc->info,succ->info);
 				trovato =1;
+			}
 			succ=succ->next;
 		}
 		precc=precc->next;
 	}
 	return trovato;
 }
+
 
 //funzione che ritorna il numeri dei valori che sono uguali tra due liste
 int conta_elementi_comuni (puntaLista l1, puntaLista l2){
@@ -263,7 +267,7 @@ int main()
     printf("\nRestituisce true se la lista e' decrescente                                            : %d",lista_ordinata_decrescentemente(l));
     printf("\nRestituisce true se la lista e' crescente                                              : %d",lista_ordinata_crescentemente(l));
     printf("\nRestiruisce true se la tuttii valori della lista e' uguale alla lunghezza della lista  : %d",lunghezza_uguale_campoInfo(l));
-    printf("\nRestiruisce true se la tuttii valori della lista e' uguale alla lunghezza della lista  : %d",verifica_almeno_un_campoInfo_pari_lunghezza(l));
+    printf("\nRestiruisce true se almeno un valore della lista e' uguale alla lunghezza della lista  : %d",verifica_almeno_un_campoInfo_pari_lunghezza(l));
     printf("\nRestituisce il numero di nodi minori al successivo                                     : %d",conta_nodi_minori_successivo(l));
     printf("\nVerifica se la coppia successiva e' uguale                                             : %d",verifica_coppia_consecutiv_uguali(l));    
 	printf("\nRestiruisce true se esiste un doppione                                                 : %d",verifica_doppioni(l));

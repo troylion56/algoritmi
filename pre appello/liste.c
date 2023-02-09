@@ -255,6 +255,7 @@ int main()
 	printf("La seconda lista: ");
 	puntaLista l1=costruisci_lista1();
 	stampaLista(l1);
+
     printf("\nRestituisco true se il primo e' uguale dell'ultimo                                     : %d",ultimo_uguale_primo(l));
     printf("\nRestituisco true se il primo e' minore dell'ultimo                                     : %d",ultimo_maggiore_primo(l));
     printf("\nRestituisce true se la lista e' decrescente                                            : %d",lista_ordinata_decrescentemente(l));

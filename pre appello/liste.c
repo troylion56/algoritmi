@@ -13,7 +13,7 @@ typedef Lista* puntaLista;			//puntatore alla lista
 //funzione che costruisce la lista poi la invoco nel main fa un inserimento in testa 
 puntaLista costruisci_lista(){
     puntaLista p = NULL;
-    int L[] = {6,7,3,2,1};
+    int L[] = {5,4,3,2,1};
     for(int i = 0; i < 5; i++ ) {
         puntaLista temp = (puntaLista)malloc(sizeof(Lista*));
         temp->info = L[i];
@@ -60,10 +60,8 @@ void stampaLista (puntaLista l) {
 //-----------------------------------------------FUNZIONI OPERAZIONI SU LE LISTE------------------------------------------------
 /*funzione che verifica se l'ultimo elemento della lista è uguale al primo */
 int ultimo_uguale_primo(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	int primo=l->info;
 	puntaLista scorri=l;
 	while(scorri->next!=NULL){
@@ -78,10 +76,8 @@ int ultimo_uguale_primo(puntaLista l){
 
 /*funzione che verifica se l'ultimo elemento della lista è maggiore del primo */
 int ultimo_maggiore_primo(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	int primo = l->info;
 	puntaLista scorri = l;
 	while(scorri->next!=NULL){
@@ -98,10 +94,8 @@ int ultimo_maggiore_primo(puntaLista l){
 
 /*funzione che verifica che la lista sia in ordine decrescente*/
 int lista_ordinata_decrescentemente(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	puntaLista precc= l; //inizializzo il precedente
 	puntaLista succ= precc->next; //inizializzo il succ
 	while(succ!=NULL){
@@ -115,10 +109,8 @@ int lista_ordinata_decrescentemente(puntaLista l){
 
 /*funzione che verifica che la lista sia in ordine crescente*/
 int lista_ordinata_crescentemente(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	puntaLista precc= l; //inizializzo il precedente
 	puntaLista succ= precc->next; //inizializzo il succ
 	while(succ!=NULL){
@@ -173,10 +165,8 @@ int lista_ordinata_crescentemente(puntaLista l){
  
 /*funzione che conta i nodi della lista che hanno campo info minore del nodo successivo*/
 int conta_nodi_minori_successivo(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0;  
 	int cont=0;
 	puntaLista precc=l;
 	puntaLista succ = precc->next;
@@ -191,10 +181,8 @@ int conta_nodi_minori_successivo(puntaLista l){
 
 /* lista che verifica se almeno una coppia di valori consecutivi di una lista sono uguali */
   int verifica_coppia_consecutiv_uguali(puntaLista l){
-	  if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	  if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	  puntaLista scorri=l;
 	  while(scorri->next!=NULL){
 		  if(scorri->info==scorri->next->info){
@@ -207,22 +195,27 @@ int conta_nodi_minori_successivo(puntaLista l){
 
 //funzione che verifica se vi sono doppioni nella lista
 int verifica_doppioni(puntaLista l){
-	if(l==NULL) 
-		return 0; //se la lista è vuota ritorna 0
-	if(l->next==NULL)
-		return 0; //la lista ha un solo elmento 
+	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
+		return 0; 
 	int trovato =0;
 	puntaLista precc=l;
-	while(precc->next!=NULL){
-		puntaLista succ= l->next;
+	while(precc!=NULL){
+		puntaLista succ= precc->next;
+		puntaLista precedente=precc;
 		while(succ!=NULL){
-			printf("\n");
+			//printf("\n%d,%d",precc->info, succ->info);
 			if(precc->info==succ->info) {
-				printf("%d,%d",precc->info,succ->info);
 				trovato =1;
+				precedente->next=succ->next;
+				free(succ);
+				succ=precedente->next;
 			}
-			succ=succ->next;
+			else {
+				precedente=succ;
+				succ=succ->next;
+			}
 		}
+		l=precc;
 		precc=precc->next;
 	}
 	return trovato;

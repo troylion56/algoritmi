@@ -153,6 +153,12 @@ grafo* costruisci_grafo() {
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
 	nodo* n10 = aggiungi_nodo(g);
+	nodo* n11 = aggiungi_nodo(g);
+	nodo* n12 = aggiungi_nodo(g);
+	nodo* n13 = aggiungi_nodo(g);
+	nodo* n14 = aggiungi_nodo(g);
+	nodo* n15 = aggiungi_nodo(g);
+
 
  	newarco(g,n2,n3);
 
@@ -163,7 +169,12 @@ grafo* costruisci_grafo() {
 	newarco(g,n7,n8);
 	newarco(g,n8,n9);
 	newarco(g,n9,n10);
-		
+
+	newarco(g,n11,n12);
+	
+	newarco(g,n13,n14);
+	newarco(g,n13,n15);
+
  	return g;
 
 /* 		n1  n2-n3      n4-n5-n6       n7-n8-n9-n10*/

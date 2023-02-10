@@ -6,25 +6,27 @@
 #include <math.h>  // per sqrt()
 
 
+/*************************************STRUTTURA******************************************/
 typedef struct mia_struct {
-
    int key;
    int val;
    struct mia_struct* next;
-
 } coppia;
 
-
 typedef struct {
-
   coppia** T;
   int n;  // numero di coppie chiave-valore inserite
   int m;  // lunghezza della tabella
   double irr;
-
 } struct_tabella;
-
 typedef struct_tabella* tabella;
+/***************************************************************************************/
+
+
+#define RESET   "\033[0m"       /* reset Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define BLUE    "\033[0;34m"    /* Blue */
 
 
 tabella new_tabella() {

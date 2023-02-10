@@ -293,7 +293,7 @@ int verifica_tutti_info_altezza_ric(nodo_albero* a){
 	return verifica_tutti_info_altezza(a,0);
 }
 
-/*quanti nodi di un albero binario hanno campo info uguale alla distanza dalla radice (è un altro modo per dire profndita) oppure altro modo per dire campo info uguale all'altezza del nodo*/
+/*quanti nodi di un albero binario hanno campo info uguale alla distanza dalla radice (è un altro modo per dire profndita di quel nodo) oppure altro modo per dire campo info uguale all'altezza del nodo*/
 /*Troy mannaggia al cazzo non farti fragare da ste cose eh*/
 int nodi_info_uguale_altezza(nodo_albero* a, int prof){
     int conta=0;

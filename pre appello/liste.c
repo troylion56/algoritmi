@@ -193,7 +193,7 @@ int conta_nodi_minori_successivo(puntaLista l){
 	  return 0;
 }
 
-//funzione che verifica se vi sono doppioni nella lista
+//funzione che verifica se vi sono doppioni in posizione qualsiasi in una lista nella lista
 int verifica_doppioni(puntaLista l){
 	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
 		return 0; 

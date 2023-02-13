@@ -141,16 +141,20 @@ int solo_un_figlio (nodo_albero* a) {
 int nodi_albero (nodo_albero* a) {
 	if(a==NULL)
 		return 0;
-	else
-		return 1+nodi_albero(a->right)+nodi_albero(a->left);
+	int conta=0;
+	if(a!=NULL)
+		conta ++;
+	return conta+nodi_albero(a->right)+nodi_albero(a->left);
 }
 
 /*funzione fa la somma del campo info di tutti i nodi*/
 int somma (nodo_albero* a) {
 	if(a==NULL)
 		return 0;
-	else
-		return a->info+somma(a->left)+somma(a->right);
+	int conta=0;
+	if(a!=NULL)
+		conta=a->info;
+	return conta+somma(a->left)+somma(a->right);
 }
 //--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -162,7 +166,7 @@ int ricercaValore (nodo_albero* a,int v) {
 	if(a==NULL)
 		return 0;
 	int verificato=0;
-	printf("\n%d",a->info);
+	//printf("\n%d",a->info);
 	if(a->info==v) {
 		verificato=1;
 	}
@@ -263,7 +267,7 @@ int verifica_esiste_foglia_destra (nodo_albero* a) {
 int foglia_meno_profonda (nodo_albero* a, int prof) {
 	if(a==NULL)
 		return -1;
-	if(a->left==0 && a->right==0)
+	if(a->left==NULL && a->right==NULL)
 		return prof;
 	int l=foglia_meno_profonda(a->left,prof+1);
 	int r=foglia_meno_profonda(a->right,prof+1);
@@ -308,7 +312,7 @@ int nodi_info_uguale_altezza_ric(nodo_albero* a) {
 	return nodi_info_uguale_altezza(a,0);
 }
 
-/*Verifica se tutti i nodi di un albero hanno campo info uguale all'altezza del albero usa la funzione altezza*/
+/*Verifica se tutti i nodi di un albero hanno campo info uguale all'altezza del albero usa la funzione altezza per calcolarti l'altezza del albero*/
 /*per fare cio mi scrivo una funzione d'appoggio che mi calcola l'altezza* è equivalente a dire la profondita*/
 int fun_altezza (nodo_albero* a) {
 	if(a==NULL)

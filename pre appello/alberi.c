@@ -61,32 +61,32 @@ nodo_albero* costrusci_albero () {
 	
 	newnodo (&r);
 	
-	nodo_albero* a=inserimentofiglioleft(r,1,'A');					//figlio left della n (a)
+//	nodo_albero* a=inserimentofiglioleft(r,1,'A');					//figlio left della n (a)
 	nodo_albero* b=inserimentofilgioright(r,1,'B');					//filgio right della n (b)
 	
-	nodo_albero* c=inserimentofiglioleft(a,2,'C');					//filgio left di a (c)
-	nodo_albero* d=inserimentofilgioright(a,2,'D');					//filgio right di a (d)
+//	nodo_albero* c=inserimentofiglioleft(a,2,'C');					//filgio left di a (c)
+//	nodo_albero* d=inserimentofilgioright(a,2,'D');					//filgio right di a (d)
 	
 	nodo_albero* e=inserimentofilgioright(b,2,'E');					//filgio right di b (e)
 	
-	nodo_albero* f=inserimentofiglioleft(d,3,'F');					//figlio right di d (f)
+//	nodo_albero* f=inserimentofiglioleft(d,3,'F');					//figlio right di d (f)
 	
 	nodo_albero* g=inserimentofiglioleft(e,3,'G');					//figlio left di e (g)
-	nodo_albero* h=inserimentofilgioright(e,3,'H');					//figlio right di e (h)
+//	nodo_albero* h=inserimentofilgioright(e,3,'H');					//figlio right di e (h)
 	
-	nodo_albero* i=inserimentofiglioleft(f,4,'I');					//figlio left di f (i)
+//	nodo_albero* i=inserimentofiglioleft(f,4,'I');					//figlio left di f (i)
 
-	nodo_albero* l=inserimentofiglioleft(h,4,'L');					
-	nodo_albero* m=inserimentofilgioright(h,4,'M');
+//	nodo_albero* l=inserimentofiglioleft(h,4,'L');					
+//	nodo_albero* m=inserimentofilgioright(h,4,'M');
 
-	nodo_albero* n=inserimentofiglioleft(i,5,'N');
-	nodo_albero* o=inserimentofilgioright(i,5,'O');
+//	nodo_albero* n=inserimentofiglioleft(i,5,'N');
+//	nodo_albero* o=inserimentofilgioright(i,5,'O');
 
-	nodo_albero* p=inserimentofiglioleft(n,6,'P');
-	nodo_albero* q=inserimentofilgioright(n,6,'Q');
+//	nodo_albero* p=inserimentofiglioleft(n,6,'P');
+//	nodo_albero* q=inserimentofilgioright(n,6,'Q');
 
-	nodo_albero* s=inserimentofiglioleft(o,6,'S');
-	nodo_albero* t=inserimentofilgioright(o,6,'T');
+//	nodo_albero* s=inserimentofiglioleft(o,6,'S');
+//	nodo_albero* t=inserimentofilgioright(o,6,'T');
 	
 	return r;
 	
@@ -399,4 +399,8 @@ int main(int argc, char **argv){
 
 	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
 	printf("\n\n\n\n");
+
+
 }
+
+

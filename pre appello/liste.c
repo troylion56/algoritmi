@@ -244,35 +244,6 @@ int conta_elementi_comuni (puntaLista l1, puntaLista l2){
 //------------------------------------------------------------------------------------------------------------------------------ 
 
  
-int verificadopp (puntaLista* l) {
-	if(l==NULL || l->next)
-		return 0;
-	int trovato=0;
-	puntaLista precc=l;
-	while (precc!=NULL)
-	{
-		puntaLista succ=precc->next;
-		puntaLista precedente=precc;
-		while (succ!=NULL)
-		{
-			if(precc->info==succ->info){
-				trovato=1;
-				precedente->next=succ->next;
-				free(succ);
-				succ=precedente->next;
-			}
-			else {
-				precedente=succ;
-				succ=succ->next;
-			}
-			l=precc;
-			precc=precc->next;
-		}
-		
-	}
-	return trovato;
-	
-}
 
  
 //------------------------------------------------------------MAIN--------------------------------------------------------------
@@ -297,7 +268,5 @@ int main()
 	printf("\nRestiruisce true se esiste un doppione                                                 : %d",verifica_doppioni(l));
 	printf("\nRestituisco il numero di elementi uguali tra due liste                                 : %d",conta_elementi_comuni(l,l1));
 	printf("\n\n\n");
-	printf("%d",verificadopp(l1));
-	return 0;
 }
 //------------------------------------------------------------------------------------------------------------------------------ 

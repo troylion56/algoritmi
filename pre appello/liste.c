@@ -221,6 +221,33 @@ int verifica_doppioni(puntaLista l){
 	return trovato;
 }
 
+int verificaDoppione (puntaLista l) {
+	if(l==NULL || l->next==NULL)
+		return 0;
+	int trovato=0;
+	puntaLista precc=l;
+	while (precc!=NULL)
+	{
+		puntaLista succ=l->next;
+		puntaLista precedente=precc;
+		while (succ!=NULL)
+		{
+			if(precc->info==succ->info) {
+				trovato=1;
+				precedente=succ->next;
+				free(succ);
+				succ=precedente->next;
+			}
+			else {
+				precedente=succ;
+				succ=succ->next;
+			}
+		}
+		l=precc;
+		precc=precc->next;
+	}
+	return trovato;
+}
 
 //funzione che ritorna il numeri dei valori che sono uguali tra due liste
 int conta_elementi_comuni (puntaLista l1, puntaLista l2){
@@ -267,6 +294,7 @@ int main()
     printf("\nVerifica se la coppia successiva e' uguale                                             : %d",verifica_coppia_consecutiv_uguali(l));    
 	printf("\nRestiruisce true se esiste un doppione                                                 : %d",verifica_doppioni(l));
 	printf("\nRestituisco il numero di elementi uguali tra due liste                                 : %d",conta_elementi_comuni(l,l1));
+	printf("%d",verificaDoppione(l));
 	printf("\n\n\n");
 }
 //------------------------------------------------------------------------------------------------------------------------------ 

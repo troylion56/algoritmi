@@ -13,7 +13,7 @@ typedef Lista* puntaLista;			//puntatore alla lista
 //funzione che costruisce la lista poi la invoco nel main fa un inserimento in testa 
 puntaLista costruisci_lista(){
     puntaLista p = NULL;
-    int L[] = {5,4,3,2,1};
+    int L[] = {5,4,3,0,5};
     for(int i = 0; i < 5; i++ ) {
         puntaLista temp = (puntaLista)malloc(sizeof(Lista*));
         temp->info = L[i];
@@ -54,6 +54,8 @@ void stampaLista (puntaLista l) {
 
 
 //------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -194,31 +196,18 @@ int conta_nodi_minori_successivo(puntaLista l){
 }
 
 //funzione che verifica se vi sono doppioni in posizione qualsiasi in una lista nella lista
-int verifica_doppioni(puntaLista l){
-	if(l==NULL || l->next==NULL) //se la lista è vuota o ha solo un elemento
-		return 0; 
-	int trovato =0;
-	puntaLista precc=l;
-	while(precc!=NULL){
-		puntaLista succ= precc->next;
-		puntaLista precedente=precc;
-		while(succ!=NULL){
-			//printf("\n%d,%d",precc->info, succ->info);
-			if(precc->info==succ->info) {
-				trovato =1;
-				precedente->next=succ->next;
-				free(succ);
-				succ=precedente->next;
-			}
-			else {
-				precedente=succ;
-				succ=succ->next;
-			}
-		}
-		l=precc;
-		precc=precc->next;
-	}
-	return trovato;
+int verifica_doppioni(puntaLista l) {
+    while (l != NULL) {
+        puntaLista scorri = l->next;
+        while (scorri != NULL) {
+            if (l->info == scorri->info) {
+                return 1;  // duplicato trovato
+            }
+            scorri = scorri->next;
+        }
+        l = l->next;
+    }
+    return 0;  // nessun duplicato trovato
 }
 
 //funzione che ritorna il numeri dei valori che sono uguali tra due liste

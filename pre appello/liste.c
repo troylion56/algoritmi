@@ -197,16 +197,16 @@ int conta_nodi_minori_successivo(puntaLista l){
 
 //funzione che verifica se vi sono doppioni in posizione qualsiasi in una lista nella lista
 int verifica_doppioni(puntaLista l) {
-    while (l != NULL) {
-        puntaLista scorri = l->next;
-        while (scorri != NULL) {
-            if (l->info == scorri->info) {
+    while (l != NULL) {		//finche la lista non è finita 
+        puntaLista scorri = l->next;	//inizializza dove ti devi fermare
+        while (scorri != NULL) {		//finisci prima 
+            if (l->info == scorri->info) {	//verifica se l = a scorri->info
                 return 1;  // duplicato trovato
             }
-            scorri = scorri->next;
+            scorri = scorri->next;	//aumenta scorri
         }
-        l = l->next;
-    }
+        l = l->next;	//poi aumenti l 
+    }	
     return 0;  // nessun duplicato trovato
 }
 

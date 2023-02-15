@@ -340,6 +340,10 @@ int verifica_info_alt_albero_ric (nodo_albero* a) {
 }
 //--------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+/*funzione che cerca il nodo con valore n e restituisce la profondità di quel nodo*/
 int cerca_nodo(nodo_albero* a, int n, int prof) {
     if (a == NULL) {
         return -1; // nodo non trovato
@@ -360,9 +364,12 @@ int cerca_nodo(nodo_albero* a, int n, int prof) {
 int cercanodo_ric(nodo_albero* a) {
 	return cerca_nodo(a,12,0);
 }
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 
-//-------------verifica se l'albero è un cammino-------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+/*funzione che verifica se l'albero è un cammino*/
 int sono_un_cammino(nodo_albero* a) {
 
 	if( a == NULL ) 
@@ -376,8 +383,36 @@ int sono_un_cammino(nodo_albero* a) {
 		return sono_un_cammino(a->left);
   	return sono_un_cammino(a->right); 
 }
-//-------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+/*funzion e che conta quanti nodi hanno entrambi figli e non hanno i nipoti*/
+int verificaFiglio(nodo_albero* a) {
+	if(a==NULL)
+		return 0;
+	if(a->left!=NULL && a->right!=NULL)
+		return 1;
+	return 0; 
+}
+int verificaNipote(nodo_albero* a){
+	if(a==NULL)
+		return 0;
+	if((a->left->left==NULL && a->left->right==NULL) &&  (a->right->left==NULL && a->right->right==NULL))
+		return 1;
+	return 0;
+}
+
+int verificaFIglioNipote (nodo_albero* a) {
+	if(a==NULL)
+		return 0;
+	int conta=0;
+	if((verificaFiglio(a->left) && verificaFiglio(a->right))  && (verificaNipote(a) && verificaNipote(a)))
+		conta++;
+	return conta + verificaFIglioNipote(a->left) + verificaFIglioNipote(a->right);
+}
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 
 //---------------------main------------------------------
@@ -417,10 +452,15 @@ int main(int argc, char **argv){
 	printf("\n\n\n");
 
 
-	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
-	printf("\n\n\n\n");
-	printf("%d",cercanodo_ric(alb));
+	printf("\ncerco il nodo che ha campo info = 12 e restituisco la profondita del nodo	:%d",cercanodo_ric(alb));	
+	printf("\n\n\n");
 
+
+	printf("\nverifica se sono un cammino                                              	: %d",sono_un_cammino(alb));
+
+
+	printf("\nconto quanti nodi hanno entrambi i figli ma non sono nonni                 	: %d",verificaFIglioNipote(alb));
+	printf("\n\n\n\n");
 
 }
 

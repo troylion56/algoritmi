@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "math.h": "c"
+        "math.h": "c",
+        "esame-2023-2-16-possibile": "c"
     }
 }

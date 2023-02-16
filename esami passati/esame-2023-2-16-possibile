@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*esame 09-09-2022 variante*/			//corretto
-/*  verifica se in quell'altezza quante foglie ci sono e confrontalo con il sottografo piu grande*/
-
+/*esame 2023-01-25 esame mio che probabilemnte devo rifare mannaggia al cazzo */	
+/*nodo_albero* abl_da_grafo (grafo* g) 
+che accetti in input un puntatore g ad un grafo non orientato rappresentato tramite oggetti e riferimenti in
+cui si assume (non deve essere verificato dalla funzione) che ogni componente connessa di g abbia un numero 
+di nodi diverso dalle altre. La funzione restituisce in output un puntatore alla radice di un albero binario 
+(di altezza qualsiasi) che memorizza le dimensioni (il numero di nodi) delle componenti connesse 
+di g. Se il grafo è NULL o non ha nessun nodo, la funzione ritorna NULL*/	
 
 
 
@@ -179,22 +183,37 @@ grafo* costruisci_grafo() {
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
-int sonoFoglia(nodo_albero* a) {
-	if(a==NULL)
-		return 0;
-	if(a->left==NULL &&a->right==NULL)
-		return 1;
-	return 0;
+nodo_albero* nuovoNodo(int info) {
+    nodo_albero* node = (nodo_albero*) malloc(sizeof(nodo_albero));
+    node->info = info;
+    node->left = NULL;
+    node->right = NULL;
+    return(node);
 }
 
-int verificaFoglieAltezza(nodo_albero* a,int alt) {
-	if(a==NULL)
-		return 0;
-	int conta=0;
-	if(alt && sonoFoglia(a))
-		conta++;
-	return conta+verificaFoglieAltezza(a->left,alt+1)+verificaFoglieAltezza(a->right,alt+1);
+void aggiungi_nodo_albero(nodo_albero* a, int valore) {
+    if(a->left ==NULL)
+        a->left=nuovoNodo(valore);
+    if(a->right== NULL)
+        a->right=nuovoNodo(valore);
 }
+
+
+void stampaalbero (nodo_albero* root) {
+	if(root !=NULL) {
+		printf("\nnodo: %d \t",root->info);
+		if (root->left!=NULL){
+			printf("sx: %d \t",root->left->info);
+		}
+		if (root->right!=NULL){
+			printf("dx: %d",root->right->info);
+		}
+		
+		stampaalbero(root->left);
+		stampaalbero(root->right);
+	}
+}
+
 
 void dfs(nodo* g,int c) {
 	g->color=c;
@@ -209,44 +228,46 @@ void dfs(nodo* g,int c) {
 	}
 }
 
-int verifica(grafo* g, nodo_albero* a) {
-	if(g==NULL || a==NULL)
-		return 0;
-	if(g==NULL && a==NULL)
-		return 0;
+nodo_albero* abl_da_grafo (grafo* g) {
+	if(g==NULL)
+        return 0;
+	elem_nodi* scorri1=g->nodi;
 	int colore=0;
-	elem_nodi* scorri=g->nodi;
-	while (scorri!=NULL)
-	{
-		if(scorri->info->color==0) {
+	while(scorri1!=NULL) {
+		if(scorri1->info->color==0) {
 			colore++;
-			dfs(scorri->info,colore);
+			printf("\ncolor: %d",colore);
+			dfs(scorri1->info,colore);
 		}
-		scorri=scorri->next;
+		scorri1=scorri1->next;
 	}
-	int* vett = (int*)calloc(colore+1,(sizeof(int)));
-	elem_nodi* scorri2=g->nodi;
-	while (scorri2!=NULL)
-	{
-		vett[scorri2->info->color]++;
-		scorri2=scorri2->next;
+	printf("\n");
+	
+	int* vett=(int*)calloc(colore+1,sizeof(int));
+	
+	//----------riempi vettore---------------
+	elem_nodi* temp2=g->nodi;
+	while(temp2!=NULL){
+		vett [temp2->info->color]++;
+		temp2=temp2->next;
 	}
-	int max=vett[1];
-	for (int i = 2; i < colore; i++)	{
-		if(vett[i]>max)
-			max=vett[i];
+	for(int i=1;i<=colore;i++) {
+		printf("vett [%d]=%d\n",i,vett[i]);	
 	}
-	int alt=verificaFoglieAltezza(a,max);
-	printf("%d",alt);
-	return alt;
+	//-------------------------
+    nodo_albero* root=nuovoNodo(vett[1]);
+    for (int i=1;i<=colore;i++) {
+		aggiungi_nodo_albero(root,vett[i]);
+		printf("inserisco nell'lbero: %d\n",vett[i]);
+    }
+
+    stampaalbero(root);
 }
-
-
-
 
 //---------------------main------------------------------
 int main(int argc, char **argv){
 	
 	grafo* grap=costruisci_grafo();
+	abl_da_grafo(grap);
 }
 //-------------------------------------------------------

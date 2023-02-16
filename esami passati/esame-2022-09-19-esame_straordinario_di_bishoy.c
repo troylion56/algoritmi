@@ -280,10 +280,13 @@ int is_foglia (nodo_albero* a) {
 int verifica_figli_visita (nodo_albero* a,int alt, int dim_gra) {	//dim_gra è la dimensione del sottografo piu grande
 	if(a==NULL)
 		return 0;
+	printf("\nvisito [%c]",a->nome);
 	int l= verifica_figli_visita(a->left,alt+1,dim_gra);
 	int r= verifica_figli_visita(a->right,alt+1,dim_gra);
-	if(alt==dim_gra && ((is_foglia(a->left)) && (is_foglia(a->right)) ))
+	if(alt==dim_gra && ((is_foglia(a->left)) && (is_foglia(a->right)) )) {
+		printf("\nil nodo che soddisfa la condizione [%c]",a->nome);
 		return 1;
+	}
 	return l || r;
 }
 
@@ -352,7 +355,7 @@ int main(int argc, char **argv){
 	grafo* grap=costruisci_grafo();
 	nodo_albero* alb=costrusci_albero();
 	
-	printf("%d",verifica(grap,alb,0));
+	printf("\nil risultato %d",verifica(grap,alb,0));
 	
 }
 //-------------------------------------------------------

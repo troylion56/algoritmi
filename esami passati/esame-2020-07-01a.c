@@ -118,6 +118,7 @@ int nodo_a_profondita (nodo_albero* a,int prof) {
 int verifica (nodo_albero* a) {
 	int h=altezza_abero(a);
 	for(int i=0;i<h;i++) {
+		printf("%c",a->nome);
 		if(nodo_a_profondita(a,i)==i)
 			return 1;
 	}

@@ -152,33 +152,21 @@ grafo* costruisci_grafo() {
  	nodo* n7 = aggiungi_nodo(g);
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
-	nodo* n10 = aggiungi_nodo(g);
-	nodo* n11 = aggiungi_nodo(g);
-	nodo* n12 = aggiungi_nodo(g);
-	nodo* n13 = aggiungi_nodo(g);
-	nodo* n14 = aggiungi_nodo(g);
-	nodo* n15 = aggiungi_nodo(g);
 
+ 	/* questa componente ha 2 nodi e 1 arco */
+ 	newarco(g,n1,n2);
 
- 	newarco(g,n2,n3);
-
+ 	/* questa componente ha 3 nodi e 3 archi */
+ 	newarco(g,n3,n4);
  	newarco(g,n4,n5);
- 	newarco(g,n5,n6);
+	newarco(g,n5,n3);
 	
-
-	newarco(g,n7,n8);
+	/* questa componente ha 4 nodi e 3 archi */
+ 	newarco(g,n6,n7);
+ 	newarco(g,n7,n8);
 	newarco(g,n8,n9);
-	newarco(g,n9,n10);
-
-	newarco(g,n11,n12);
-	
-	newarco(g,n13,n14);
-	newarco(g,n13,n15);
-
+ 	
  	return g;
-
-/* 		n1  n2-n3      n4-n5-n6       n7-n8-n9-n10*/
-
 }
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
@@ -256,7 +244,7 @@ nodo_albero* abl_da_grafo (grafo* g) {
 	}
 	//-------------------------
     nodo_albero* root=nuovoNodo(vett[1]);
-    for (int i=1;i<=colore;i++) {
+    for (int i=2;i<=colore;i++) {
 		aggiungi_nodo_albero(root,vett[i]);
 		printf("inserisco nell'lbero: %d\n",vett[i]);
     }

@@ -194,7 +194,7 @@ nodo_albero* nuovoNodo(int info) {
 void aggiungi_nodo_albero(nodo_albero* a, int valore) {
     if(a->left ==NULL)
         a->left=nuovoNodo(valore);
-    if(a->right== NULL)
+    else if(a->right== NULL)
         a->right=nuovoNodo(valore);
 }
 

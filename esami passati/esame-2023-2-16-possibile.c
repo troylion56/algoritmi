@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*esame 2023-01-25 esame mio che probabilemnte devo rifare mannaggia al cazzo */	
-/*nodo_albero* abl_da_grafo (grafo* g) 
-che accetti in input un puntatore g ad un grafo non orientato rappresentato tramite oggetti e riferimenti in
-cui si assume (non deve essere verificato dalla funzione) che ogni componente connessa di g abbia un numero 
-di nodi diverso dalle altre. La funzione restituisce in output un puntatore alla radice di un albero binario 
-(di altezza qualsiasi) che memorizza le dimensioni (il numero di nodi) delle componenti connesse 
-di g. Se il grafo è NULL o non ha nessun nodo, la funzione ritorna NULL*/	
+/*esame 2023-02-16 secondo appello di feb riuscirà Troy a passare asd ?
+Scrivi in linguaggio c il codice della funzione 
+int verifica (grafo* g, nodo_albero* a)
+che accetti in input g ad un grafo non orientato rappresentato tramite oggetti e riferimenti e
+un puntatore a alla radice di un albero di grado arbitrario. La funzione restituisce in output 1 (true) se, per 
+ogni componente connessa di g, eiste almeno un nodo di a il cui numero di figli è uguale al numero dei 
+nodi della componente connessa di g in questione. La funzione ritorna 0 (false) altrimenti (cioè se almeno
+una componente connessa di g ha un numero di nodi che non è uguale al numero di figli di nessun nodo di 
+a). Se il grafo è NULL o non ha nodi la funzione ritorna 1(true) */	
 
 
 
@@ -58,6 +60,77 @@ typedef struct nodo_abero_struc {
 	struct nodo_abero_struc* right;
 	char nome;
 }nodo_albero;
+
+/***************************************************************funzioni albero*****************************************************************/
+
+//-------------------newalbero--------------------
+nodo_albero* newalbero (int n,char nome){
+	nodo_albero* new=malloc(sizeof(nodo_albero));
+	new->left=NULL;
+	new->right=NULL;
+	new->info=n;
+	new->nome=nome;
+	return new;
+}
+//------------------------------------------------
+
+//-------------------addfilgiosx------------------
+nodo_albero* addfigliosx (nodo_albero* radice,int n,char nome){
+	nodo_albero* new=malloc(sizeof(nodo_albero));
+	radice->left=new;
+	new->info=n;
+	new->nome=nome;
+	new->right=NULL;
+	new->left=NULL;
+	return new;
+}
+//------------------------------------------------
+
+//------------------addfratellodx-----------------
+nodo_albero* addfratellodx (nodo_albero* radice,int n,char nome){
+	nodo_albero* new=malloc(sizeof(nodo_albero));
+	radice->right=new;
+	new->info=n;
+	new->nome=nome;
+	new->right=NULL;
+	new->left=NULL;
+	return new;
+}
+//------------------------------------------------
+
+//--------------COSTRUSICI ALBERO-----------------
+nodo_albero* costruisci_albero_arbitrario () {
+	
+	nodo_albero* root=newalbero(0,'R');
+	
+	nodo_albero* A=addfigliosx(root,1,'A');
+	nodo_albero* B=addfratellodx(A,0,'B');
+	nodo_albero* C=addfratellodx(B,0,'C');
+	
+	nodo_albero* D=addfigliosx(A,1,'D');
+	nodo_albero* E=addfigliosx(C,0,'F');
+	nodo_albero* F=addfratellodx(E,1,'G');
+	
+	nodo_albero* G=addfigliosx(E,1,'G');
+	nodo_albero* H=addfratellodx(G,1,'H');
+	nodo_albero* I=addfratellodx(H,1,'I');
+	nodo_albero* L=addfratellodx(I,0,'L');
+	nodo_albero* M=addfratellodx(L,1,'M');
+	nodo_albero* N=addfratellodx(M,1,'N');
+	return root;
+}
+ /*questo è l'albero costruito sopra
+                             h
+              r			     0
+		     /
+			A-B-C            1
+		   /   /
+		  D    E-F           2
+	          / 
+		      G-H-I-L-M-N    3 */
+//------------------------------------------------
+/****************************************************************************************************************************************************/
+
 
 
 /***************************************************************funzioni grafo*************************************************************************/
@@ -152,55 +225,72 @@ grafo* costruisci_grafo() {
  	nodo* n7 = aggiungi_nodo(g);
  	nodo* n8 = aggiungi_nodo(g);
  	nodo* n9 = aggiungi_nodo(g);
+	nodo* n10 = aggiungi_nodo(g);
+	nodo* n11 = aggiungi_nodo(g);
+	nodo* n12 = aggiungi_nodo(g);
+	nodo* n13 = aggiungi_nodo(g);
 
  	/* questa componente ha 2 nodi e 1 arco */
  	newarco(g,n1,n2);
 
- 	/* questa componente ha 3 nodi e 3 archi */
- 	newarco(g,n3,n4);
+ 	/* questa componente ha 4 nodi e 3 archi */
  	newarco(g,n4,n5);
-	newarco(g,n5,n3);
+ 	newarco(g,n5,n6);
+	newarco(g,n6,n7);
 	
-	/* questa componente ha 4 nodi e 3 archi */
- 	newarco(g,n6,n7);
- 	newarco(g,n7,n8);
-	newarco(g,n8,n9);
+	/* questa componente ha 6 nodi e 6 archi */
+ 	newarco(g,n8,n9);
+ 	newarco(g,n9,n10);
+	newarco(g,n9,n11);
+	newarco(g,n11,n12);
+	newarco(g,n10,n12);
+	newarco(g,n12,n13);
+	
  	
  	return g;
 }
 //-------------------------------------------------------
 /****************************************************************************************************************************************************/
 
-nodo_albero* nuovoNodo(int info) {
-    nodo_albero* node = (nodo_albero*) malloc(sizeof(nodo_albero));
-    node->info = info;
-    node->left = NULL;
-    node->right = NULL;
-    return(node);
-}
-
-void aggiungi_nodo_albero(nodo_albero* a, int valore) {
-    if(a->left ==NULL)
-        a->left=nuovoNodo(valore);
-    else if(a->right== NULL)
-        a->right=nuovoNodo(valore);
-}
 
 
-void stampaalbero (nodo_albero* root) {
-	if(root !=NULL) {
-		printf("\nnodo: %d \t",root->info);
-		if (root->left!=NULL){
-			printf("sx: %d \t",root->left->info);
-		}
-		if (root->right!=NULL){
-			printf("dx: %d",root->right->info);
-		}
-		
-		stampaalbero(root->left);
-		stampaalbero(root->right);
+//-------------------contafigli-------------------
+int contafigli (nodo_albero* a){
+	//funzione di supporto che prende un nodo e ne conta i fratelli per determinare i figli del genitore
+	if(a==NULL){
+		return 0;
 	}
+	if(a->left==NULL){
+		//il nodo non ha figli
+		return 0;
+	}
+	nodo_albero* temp=a->left;
+	int conta=0;
+	while(temp!=NULL){
+		conta++;
+		temp=temp->right;
+	}
+	return conta;
 }
+
+
+
+int visitaVerifica (nodo_albero* a,int valore) {
+	if(a==NULL)
+		return 0;
+	int out=0;
+	nodo_albero* temp=a->left;
+	//printf("visito [%c]\n",a->nome);
+	while (temp!=NULL) {
+		//printf("\n%d,%d\n",contafigli(temp),valore);
+		if(contafigli(temp)==valore) {
+			out= out || visitaVerifica(temp,valore);
+		}	
+		temp=temp->right;		
+	}
+	return out;
+}
+
 
 
 void dfs(nodo* g,int c) {
@@ -216,9 +306,11 @@ void dfs(nodo* g,int c) {
 	}
 }
 
-nodo_albero* abl_da_grafo (grafo* g) {
-	if(g==NULL)
-        return 0;
+int verifica (grafo* g, nodo_albero* a) {
+	if(g==NULL || a==NULL)
+        return 1;
+	if(g==NULL && a==NULL)
+		return 1;
 	elem_nodi* scorri1=g->nodi;
 	int colore=0;
 	while(scorri1!=NULL) {
@@ -243,19 +335,20 @@ nodo_albero* abl_da_grafo (grafo* g) {
 		printf("vett [%d]=%d\n",i,vett[i]);	
 	}
 	//-------------------------
-    nodo_albero* root=nuovoNodo(vett[1]);
-    for (int i=2;i<=colore;i++) {
-		aggiungi_nodo_albero(root,vett[i]);
-		printf("inserisco nell'lbero: %d\n",vett[i]);
-    }
-
-    stampaalbero(root);
+	/*studio l'albero*/
+	for(int i=1;i<=colore;i++) {
+		if(visitaVerifica(a,vett[i]))
+			return 1;
+	}
+	return 0;
+   
 }
 
 //---------------------main------------------------------
 int main(int argc, char **argv){
 	
 	grafo* grap=costruisci_grafo();
-	abl_da_grafo(grap);
+	nodo_albero* alb=costruisci_albero_arbitrario();
+	printf("output : %d",verifica(grap,alb));
 }
 //-------------------------------------------------------

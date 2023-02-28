@@ -284,8 +284,9 @@ int visitaVerifica (nodo_albero* a,int valore) {
 	while (temp!=NULL) {
 		//printf("\n%d,%d\n",contafigli(temp),valore);
 		if(contafigli(temp)==valore) {
-			out= out || visitaVerifica(temp,valore);
+			out= 1;
 		}	
+		out || visitaVerifica(temp,valore);
 		temp=temp->right;		
 	}
 	return out;
